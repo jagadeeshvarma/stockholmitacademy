@@ -86,4 +86,402 @@
     .brand-mark {
       width: 40px;
       height: 40px;
-      border-radius:
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ffffff, #e2eaf3);
+      border: 1px solid #c7d0db;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--accent-main-strong);
+    }
+
+    .brand-text-main {
+      font-weight: 600;
+      color: var(--accent-main-strong);
+      font-size: 16px;
+    }
+
+    .brand-text-sub {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .header-link {
+      font-size: 12px;
+      color: var(--accent-main);
+      text-decoration: none;
+      border-radius: var(--radius-pill);
+      padding: 6px 12px;
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
+    }
+
+    .header-link:hover {
+      background: #e0e7ff;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .shell {
+        padding: 18px 14px 22px;
+      }
+
+      .content {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-link {
+        align-self: flex-end;
+      }
+    }
+
+    .copy-block {
+      padding-right: 10px;
+    }
+
+    .error-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: #fef3c7;
+      border: 1px solid #facc15;
+      font-size: 11px;
+      color: #854d0e;
+      margin-bottom: 10px;
+    }
+
+    .error-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #f97316;
+    }
+
+    .error-code {
+      font-size: 44px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--accent-main-strong);
+      margin-bottom: 4px;
+    }
+
+    .error-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--accent-main-strong);
+      margin-bottom: 8px;
+    }
+
+    .error-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .hint-list {
+      list-style: none;
+      margin-bottom: 18px;
+    }
+
+    .hint-list li {
+      font-size: 13px;
+      color: var(--text-soft);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .hint-bullet {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #d1d5db;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .btn-primary {
+      background: var(--accent-main);
+      color: #ffffff;
+      border-color: var(--accent-main);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-main-strong);
+      border-color: var(--accent-main-strong);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--accent-main-strong);
+      border-color: #cbd5e1;
+    }
+
+    .btn-secondary:hover {
+      background: #f3f4f6;
+      border-color: var(--accent-main);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.16);
+      font-size: 11px;
+    }
+
+    /* Illustration */
+    .art-card {
+      background: radial-gradient(circle at top left, #eff6ff, #ffffff 55%, #e5edf5 100%);
+      border-radius: var(--radius-lg);
+      border: 1px solid #d1d5db;
+      padding: 16px;
+      box-shadow: var(--shadow-strong);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .art-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .art-pill {
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      background: #111827;
+      color: #e5e7eb;
+      font-size: 10px;
+    }
+
+    .timeline {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      column-gap: 8px;
+      align-items: start;
+    }
+
+    .timeline-marker {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 2px solid var(--accent-main);
+      position: relative;
+      top: 2px;
+    }
+
+    .timeline-label {
+      font-size: 12px;
+      color: var(--accent-main-strong);
+      font-weight: 500;
+    }
+
+    .timeline-text {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .floating-tag {
+      position: absolute;
+      bottom: 12px;
+      right: 14px;
+      font-size: 11px;
+      background: #ecfdf5;
+      color: #166534;
+      border-radius: var(--radius-pill);
+      padding: 4px 9px;
+      border: 1px solid #bbf7d0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .floating-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    footer {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--text-soft);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 11px;
+      color: var(--accent-main);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--accent-main);
+      padding-bottom: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="shell">
+      <header>
+        <div class="brand">
+          <div class="brand-mark">SITA</div>
+          <div>
+            <div class="brand-text-main">Stockholm IT Academy</div>
+            <div class="brand-text-sub">Focused training for tech and career growth</div>
+          </div>
+        </div>
+        <a href="/" class="header-link">Back to main page</a>
+      </header>
+
+      <section class="content" aria-label="Page not found">
+        <div class="copy-block">
+          <div class="error-label">
+            <span class="error-dot"></span>
+            <span>Lesson not found</span>
+          </div>
+
+          <div class="error-code">404</div>
+          <h1 class="error-title">This page is not part of the curriculum yet</h1>
+          <p class="error-body">
+            The link you used points to a page that does not exist on the site.
+            It may be an old link, a small spelling mistake or a page that is still in preparation.
+          </p>
+
+          <ul class="hint-list">
+            <li><span class="hint-bullet"></span><span>Check if the address in the browser bar is written correctly</span></li>
+            <li><span class="hint-bullet"></span><span>Return to the payment page to secure your seat or pick another course</span></li>
+            <li><span class="hint-bullet"></span><span>Reach out to us if you received this link from a mail or a friend</span></li>
+          </ul>
+
+          <div class="button-row">
+            <a href="/" class="btn-primary">
+              <span>Go to course payments</span>
+              <span class="btn-icon">↩</span>
+            </a>
+            <a href="mailto:ask@sita.dev" class="btn-secondary">
+              <span>Contact support</span>
+              <span class="btn-icon">✉</span>
+            </a>
+          </div>
+        </div>
+
+        <aside class="art-card" aria-hidden="true">
+          <div class="art-header">
+            <span class="art-pill">Progress tracker</span>
+            <span>Today</span>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-row">
+              <div class="timeline-marker"></div>
+              <div>
+                <div class="timeline-label">You reached a missing page</div>
+                <div class="timeline-text">No worries. This step is outside the current learning plan.</div>
+              </div>
+            </div>
+
+            <div class="timeline-row">
+              <div class="timeline-marker"></div>
+              <div>
+                <div class="timeline-label">Pick your course again</div>
+                <div class="timeline-text">Use the main page to select the course that fits your next step.</div>
+              </div>
+            </div>
+
+            <div class="timeline-row">
+              <div class="timeline-marker"></div>
+              <div>
+                <div class="timeline-label">Stay on track</div>
+                <div class="timeline-text">Once you pay, we send your schedule, links and first tasks.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="floating-tag">
+            <span class="floating-dot"></span>
+            <span>Learning path still on track</span>
+          </div>
+        </aside>
+      </section>
+
+      <footer>
+        <div>© <span id="year"></span> Stockholm IT Academy</div>
+        <div class="footer-links">
+          <a href="/">Course payments</a>
+          <a href="mailto:ask@sita.dev">Mail support</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
