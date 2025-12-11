@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JavaScript & TypeScript Curriculum – Stockholm IT Academy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+
+  <style>
+    :root {
+      --falun-red: #801818;
+      --swedish-yellow: #fada5e;
+      --white: #ffffff;
+      --bg-main: #020204;
+      --bg-shell: #050509;
+      --bg-card: #0c0c12;
+      --bg-card-soft: #12121c;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --text-soft: #6b7280;
+      --border-subtle: rgba(148,163,184,0.55);
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --shadow-shell: 0 30px 120px rgba(0,0,0,0.9);
+      --shadow-card: 0 20px 70px rgba(0,0,0,0.85);
+      --transition-fast: 140ms ease-out;
+      --transition-med: 220ms ease-out;
+      --max-width: 1160px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(248, 250, 252, 0.08), transparent 55%),
+        radial-gradient(circle at 120% 0, rgba(250, 218, 94, 0.08), transparent 55%),
+        radial-gradient(circle at bottom, rgba(128, 24, 24, 0.55), #020204 68%, #020204 100%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 24px 16px 40px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: var(--max-width);
+    }
+
+    .shell {
+      background:
+        radial-gradient(circle at top left, rgba(128, 24, 24, 0.48), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(16, 24, 40, 0.95), rgba(5, 5, 9, 0.98));
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(75, 85, 99, 0.85);
+      box-shadow: var(--shadow-shell);
+      padding: 24px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(55, 65, 81, 0.85);
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 22% 18%, rgba(248, 250, 252, 0.9), transparent 55%),
+        conic-gradient(from 160deg, var(--falun-red), var(--swedish-yellow), #f6b8b0, var(--falun-red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.8);
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top, rgba(5, 5, 9, 0.9), rgba(5, 5, 9, 0.98));
+      border: 1px solid rgba(5, 5, 9, 0.95);
+    }
+
+    .brand-initials {
+      position: relative;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .brand-text-main {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .brand-text-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .header-link {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .header-link span.icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+
+    .header-link:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(249, 250, 251, 0.6);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 640px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-link {
+        align-self: flex-end;
+      }
+    }
+
+    .hero {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
+      padding: 16px 16px 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.75);
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(248, 250, 252, 0.2);
+      background: rgba(15, 23, 42, 0.8);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .hero-eyebrow span.label {
+      color: var(--swedish-yellow);
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .hero-title span.highlight {
+      color: var(--swedish-yellow);
+    }
+
+    .hero-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 640px;
+      line-height: 1.6;
+    }
+
+    .layout {
+      margin-top: 18px;
+      display: grid;
+      gap: 18px;
+    }
+
+    @media (min-width: 920px) {
+      .layout {
+        grid-template-columns: minmax(0, 1.7fr) minmax(290px, 0.9fr);
+        align-items: flex-start;
+      }
+    }
+
+    .curriculum-column {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .curriculum-intro {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .curriculum-note {
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+
+    .module-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    details.module {
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(12, 12, 18, 0.98));
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      padding: 10px 11px;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.7);
+      transition: border-color var(--transition-med), transform var(--transition-med), box-shadow var(--transition-med), background-color var(--transition-med);
+    }
+
+    details.module[open] {
+      border-color: rgba(250, 218, 94, 0.8);
+      transform: translateY(-1px);
+      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.85);
+      background: radial-gradient(circle at top left, rgba(128, 24, 24, 0.5), rgba(12, 12, 18, 0.98));
+    }
+
+    summary.module-summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    summary.module-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .module-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .module-number {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, rgba(250, 218, 94, 0.9), rgba(161, 98, 7, 0.9));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1f2937;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.7);
+    }
+
+    .module-title-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .module-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .module-tagline {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .module-chevron {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    details[open] .module-chevron {
+      transform: rotate(90deg);
+      border-color: rgba(250, 218, 94, 0.8);
+      color: var(--swedish-yellow);
+    }
+
+    .module-body {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(55, 65, 81, 0.8);
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .module-body p {
+      margin-bottom: 6px;
+    }
+
+    .module-list-items {
+      list-style: none;
+      display: grid;
+      gap: 3px;
+      margin-top: 4px;
+    }
+
+    .module-list-items li {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .module-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.9);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .module-bullet-text {
+      color: var(--text-muted);
+    }
+
+    .payment-column {
+      position: relative;
+    }
+
+    .payment-panel {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(250, 218, 94, 0.85);
+      background:
+        radial-gradient(circle at top left, rgba(250, 218, 94, 0.12), transparent 55%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(5, 5, 9, 0.98));
+      padding: 16px 14px 16px;
+      box-shadow: var(--shadow-card);
+    }
+
+    @media (min-width: 920px) {
+      .payment-panel {
+        position: sticky;
+        top: 18px;
+      }
+    }
+
+    .pay-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .pay-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .pay-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .pay-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .pay-chip {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      padding: 4px 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pay-chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--swedish-yellow);
+      box-shadow: 0 0 10px rgba(250, 218, 94, 0.8);
+    }
+
+    .pay-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(75, 85, 99, 0.9), transparent);
+      margin: 10px 0;
+    }
+
+    stripe-buy-button {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    stripe-buy-button iframe {
+      width: 100% !important;
+      margin: 0 auto;
+    }
+
+    .pay-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(31, 41, 55, 0.85);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(156, 163, 175, 0.9);
+      padding-bottom: 1px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="shell">
+
+      <header>
+        <div class="brand">
+          <div class="brand-mark">
+            <span class="brand-initials">SITA</span>
+          </div>
+          <div>
+            <div class="brand-text-main">Stockholm IT Academy</div>
+            <div class="brand-text-sub">JavaScript and TypeScript course curriculum</div>
+          </div>
+        </div>
+        <a href="/" class="header-link">
+          <span class="icon">←</span>
+          <span>Back to payment page</span>
+        </a>
+      </header>
+
+      <section class="hero" aria-label="JavaScript and TypeScript course overview">
+        <div class="hero-eyebrow">
+          <span class="label">JavaScript and TypeScript curriculum</span>
+          <span>From first lines of code to real projects</span>
+        </div>
+        <h1 class="hero-title">
+          Learn JavaScript and TypeScript in a
+          <span class="highlight">practical and structured</span>
+          way
+        </h1>
+        <p class="hero-subtitle">
+          This course takes you from the first steps in JavaScript to writing clear TypeScript for real world web projects. You learn the language basics, how the browser works, how to structure code, how to use TypeScript types for safety and how everything connects to simple front end apps that feel real.
+        </p>
+      </section>
+
+      <main class="layout">
+        <section class="curriculum-column" aria-label="JavaScript and TypeScript curriculum">
+          <p class="curriculum-intro">
+            The course is split into modules that build on each other. You start with core ideas and small code snippets and move towards complete features and mini projects.
+          </p>
+          <p class="curriculum-note">
+            You do not need previous coding experience. We explain code in plain language, repeat key ideas, and use short practice tasks that match how beginners think.
+          </p>
+
+          <div class="module-list">
+
+            <details class="module" open>
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">1</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Programming and JavaScript basics</div>
+                    <div class="module-tagline">Start with the building blocks of code</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn what programming really means, why JavaScript is used almost everywhere and how a browser runs your code.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">How browsers read HTML, CSS and JavaScript together</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Variables and simple data like numbers, text and booleans</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Basic operators and expressions explained through small tasks</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Writing and running your first scripts in a simple environment</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">2</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Control flow and functions</div>
+                    <div class="module-tagline">Teach your code to make decisions</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  In this module you learn how to guide the path of your program and how to group logic into simple functions that you can reuse.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">If and else statements with clear visual examples and exercises</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Loops for repeating work in a controlled way using small scenarios</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Functions as named actions and how to call them with inputs and outputs</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">How to read simple error messages and fix common mistakes</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">3</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Working with arrays and objects</div>
+                    <div class="module-tagline">Handle structured data like a real app</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn how to organise data in arrays and objects so your code can model simple real life problems.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Arrays for lists of items such as users, tasks or products</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Objects for grouping related details into one unit</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Common array methods using small examples such as filter and map</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Reading and updating nested data without getting lost</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">4</div>
+                  <div class="module-title-text">
+                    <div class="module-title">The browser, DOM and events</div>
+                    <div class="module-tagline">Connect your code to real web pages</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  In this module your code starts to interact with buttons, forms and text on the page.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">What the DOM is and how JavaScript sees the page structure</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Selecting elements by id, class and simple query selectors</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Listening to user actions such as click and input events</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Updating text and styles to show live feedback on the page</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">5</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Async JavaScript and APIs</div>
+                    <div class="module-tagline">Talk to backends and handle real data</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn how web apps communicate with servers and how to fetch data without blocking the page.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">The idea of promises shown through visual timelines and stories</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Using async and await to write clear asynchronous code</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Fetching data from a sample API and showing it on the page</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Simple error handling patterns that prevent confusing failures</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">6</div>
+                  <div class="module-title-text">
+                    <div class="module-title">First steps with TypeScript</div>
+                    <div class="module-tagline">Add types to make your code safer</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  Here you move from plain JavaScript to TypeScript and see how types help catch issues early.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">What TypeScript adds on top of JavaScript and why teams use it</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Basic types such as string, number, boolean and arrays of values</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Type aliases and simple interfaces to describe objects clearly</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">How TypeScript compiles to JavaScript and fits into a project</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">7</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Structuring projects with TypeScript</div>
+                    <div class="module-tagline">Organise real code bases in a simple way</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You now apply types in a project structure that feels close to junior developer work.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Splitting code into modules and keeping files focused and small</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Type safe functions for handling user input and API data</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Using basic generics in a friendly way when it makes sense</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Reading TypeScript error messages and fixing root causes</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">8</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Mini projects and next steps</div>
+                    <div class="module-tagline">Bring everything together in simple apps</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  The last module focuses on small but complete projects that connect all your skills and give you something real to show and talk about.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Building a simple interactive tool such as a task list or budget tracker with JavaScript and TypeScript</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Adding input validation and basic error states using types and clear messages on the page</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Organising the project so it is easy to explain in an interview or portfolio</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Simple ideas for where to go next such as front end frameworks or backend basics</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+          </div>
+        </section>
+
+        <aside class="payment-column" aria-label="JavaScript and TypeScript payment">
+          <div class="payment-panel">
+            <p class="pay-label">Secure your seat for JavaScript and TypeScript</p>
+            <h2 class="pay-title">JavaScript and TypeScript course</h2>
+            <p class="pay-subtitle">
+              This course is for people who want a clear entry into modern JavaScript and TypeScript so they can read, write and talk about real front end code with confidence.
+            </p>
+
+            <div class="pay-meta">
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Beginner friendly path</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Modern JavaScript</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>TypeScript from basics</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Mini project at the end</span>
+              </div>
+            </div>
+
+            <div class="pay-divider"></div>
+
+            <stripe-buy-button
+              buy-button-id="buy_btn_1Sd6YNAmKJqD2xzJpADKDfoE"
+              publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+            </stripe-buy-button>
+
+            <p class="pay-note">
+              After payment you receive your welcome message with schedule, links and a simple checklist to prepare for the first session.
+            </p>
+          </div>
+        </aside>
+      </main>
+
+      <footer>
+        <div>© <span id="year"></span> Stockholm IT Academy</div>
+        <div class="footer-links">
+          <a href="/">Payment page</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

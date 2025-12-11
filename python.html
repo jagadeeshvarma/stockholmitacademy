@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Python Curriculum – Stockholm IT Academy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+
+  <style>
+    :root {
+      --falun-red: #801818;
+      --swedish-yellow: #fada5e;
+      --white: #ffffff;
+      --bg-main: #020204;
+      --bg-shell: #050509;
+      --bg-card: #0c0c12;
+      --bg-card-soft: #12121c;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --text-soft: #6b7280;
+      --border-subtle: rgba(148,163,184,0.55);
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --shadow-shell: 0 30px 120px rgba(0,0,0,0.9);
+      --shadow-card: 0 20px 70px rgba(0,0,0,0.85);
+      --transition-fast: 140ms ease-out;
+      --transition-med: 220ms ease-out;
+      --max-width: 1160px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(248, 250, 252, 0.08), transparent 55%),
+        radial-gradient(circle at 120% 0, rgba(250, 218, 94, 0.08), transparent 55%),
+        radial-gradient(circle at bottom, rgba(128, 24, 24, 0.55), #020204 68%, #020204 100%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 24px 16px 40px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: var(--max-width);
+    }
+
+    .shell {
+      background:
+        radial-gradient(circle at top left, rgba(128, 24, 24, 0.48), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(16, 24, 40, 0.95), rgba(5, 5, 9, 0.98));
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(75, 85, 99, 0.85);
+      box-shadow: var(--shadow-shell);
+      padding: 24px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(55, 65, 81, 0.85);
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 22% 18%, rgba(248, 250, 252, 0.9), transparent 55%),
+        conic-gradient(from 160deg, var(--falun-red), var(--swedish-yellow), #f6b8b0, var(--falun-red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.8);
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top, rgba(5, 5, 9, 0.9), rgba(5, 5, 9, 0.98));
+      border: 1px solid rgba(5, 5, 9, 0.95);
+    }
+
+    .brand-initials {
+      position: relative;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .brand-text-main {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .brand-text-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .header-link {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .header-link span.icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+
+    .header-link:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(249, 250, 251, 0.6);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 640px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-link {
+        align-self: flex-end;
+      }
+    }
+
+    .hero {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
+      padding: 16px 16px 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.75);
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(248, 250, 252, 0.2);
+      background: rgba(15, 23, 42, 0.8);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .hero-eyebrow span.label {
+      color: var(--swedish-yellow);
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .hero-title span.highlight {
+      color: var(--swedish-yellow);
+    }
+
+    .hero-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 640px;
+      line-height: 1.6;
+    }
+
+    .layout {
+      margin-top: 18px;
+      display: grid;
+      gap: 18px;
+    }
+
+    @media (min-width: 920px) {
+      .layout {
+        grid-template-columns: minmax(0, 1.7fr) minmax(290px, 0.9fr);
+        align-items: flex-start;
+      }
+    }
+
+    .curriculum-column {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .curriculum-intro {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .curriculum-note {
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+
+    .module-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    details.module {
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(12, 12, 18, 0.98));
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      padding: 10px 11px;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.7);
+      transition: border-color var(--transition-med), transform var(--transition-med), box-shadow var(--transition-med), background-color var(--transition-med);
+    }
+
+    details.module[open] {
+      border-color: rgba(250, 218, 94, 0.8);
+      transform: translateY(-1px);
+      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.85);
+      background: radial-gradient(circle at top left, rgba(128, 24, 24, 0.5), rgba(12, 12, 18, 0.98));
+    }
+
+    summary.module-summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    summary.module-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .module-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .module-number {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, rgba(250, 218, 94, 0.9), rgba(161, 98, 7, 0.9));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1f2937;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.7);
+    }
+
+    .module-title-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .module-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .module-tagline {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .module-chevron {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    details[open] .module-chevron {
+      transform: rotate(90deg);
+      border-color: rgba(250, 218, 94, 0.8);
+      color: var(--swedish-yellow);
+    }
+
+    .module-body {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(55, 65, 81, 0.8);
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .module-body p {
+      margin-bottom: 6px;
+    }
+
+    .module-list-items {
+      list-style: none;
+      display: grid;
+      gap: 3px;
+      margin-top: 4px;
+    }
+
+    .module-list-items li {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .module-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.9);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .module-bullet-text {
+      color: var(--text-muted);
+    }
+
+    .payment-column {
+      position: relative;
+    }
+
+    .payment-panel {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(250, 218, 94, 0.85);
+      background:
+        radial-gradient(circle at top left, rgba(250, 218, 94, 0.12), transparent 55%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(5, 5, 9, 0.98));
+      padding: 16px 14px 16px;
+      box-shadow: var(--shadow-card);
+    }
+
+    @media (min-width: 920px) {
+      .payment-panel {
+        position: sticky;
+        top: 18px;
+      }
+    }
+
+    .pay-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .pay-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .pay-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .pay-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .pay-chip {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      padding: 4px 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pay-chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--swedish-yellow);
+      box-shadow: 0 0 10px rgba(250, 218, 94, 0.8);
+    }
+
+    .pay-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(75, 85, 99, 0.9), transparent);
+      margin: 10px 0;
+    }
+
+    stripe-buy-button {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    stripe-buy-button iframe {
+      width: 100% !important;
+      margin: 0 auto;
+    }
+
+    .pay-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(31, 41, 55, 0.85);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(156, 163, 175, 0.9);
+      padding-bottom: 1px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="shell">
+
+      <header>
+        <div class="brand">
+          <div class="brand-mark">
+            <span class="brand-initials">SITA</span>
+          </div>
+          <div>
+            <div class="brand-text-main">Stockholm IT Academy</div>
+            <div class="brand-text-sub">Python course curriculum</div>
+          </div>
+        </div>
+        <a href="/" class="header-link">
+          <span class="icon">←</span>
+          <span>Back to payment page</span>
+        </a>
+      </header>
+
+      <section class="hero" aria-label="Python course overview">
+        <div class="hero-eyebrow">
+          <span class="label">Python curriculum</span>
+          <span>From first script to useful tools</span>
+        </div>
+        <h1 class="hero-title">
+          Learn Python in a
+          <span class="highlight">clear and practical</span>
+          way
+        </h1>
+        <p class="hero-subtitle">
+          This course takes you from your first Python script to writing small but real programs that solve everyday problems. You learn core language concepts, how to work with data, how to handle files and errors and how to build simple tools that feel useful in real life and real work.
+        </p>
+      </section>
+
+      <main class="layout">
+        <section class="curriculum-column" aria-label="Python curriculum">
+          <p class="curriculum-intro">
+            The course is organised into modules that connect in a natural way. You start with basic syntax and simple exercises and move towards small scripts and mini projects that feel close to real use.
+          </p>
+          <p class="curriculum-note">
+            You do not need previous coding experience. We explain ideas in simple language, repeat patterns and use short tasks that make each new topic feel manageable.
+          </p>
+
+          <div class="module-list">
+
+            <details class="module" open>
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">1</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Introduction to Python and setup</div>
+                    <div class="module-tagline">Start coding with a calm and clear base</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn what Python is used for, why many teams like it and how to prepare your machine to run Python code without stress.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Where Python is used in the real world such as web, data and automation</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Installing Python and using a simple editor to write and run scripts</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Your first program and how to print values and simple messages</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Basic workflow for saving files, running them and seeing results</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">2</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Variables, types and expressions</div>
+                    <div class="module-tagline">Work with data in a simple and safe way</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn how Python stores data, how to choose meaningful names and how to perform basic calculations with clear code.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Numbers, text and booleans with examples from daily life scenarios</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Variables as labels for values and simple naming habits to keep code readable</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Expressions and operators used for basic maths and text handling</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Reading values from the user and showing friendly output back</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">3</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Conditions and functions</div>
+                    <div class="module-tagline">Teach your program to react and reuse logic</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  In this module your programs start to make decisions and you learn to group repeated logic into small functions.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">If, elif and else with clear examples and simple decision flows</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Writing functions with inputs and return values that are easy to test and reuse</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Combining conditions and functions to keep code short and focused</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Small exercises like score calculators or simple helpers for daily tasks</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">4</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Loops and collections</div>
+                    <div class="module-tagline">Handle lists of data without repeating yourself</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn how to process many items one by one and how to use Python collections for structured data.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">For loops and while loops with clear stopping rules and examples</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Lists for ordered items such as tasks, prices or names with simple operations on them</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Dictionaries for key and value pairs where you look up data by name instead of position</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Practical tasks such as summing values, counting items and basic search in collections</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">5</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Working with files and simple data formats</div>
+                    <div class="module-tagline">Store and read information from the real world</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  Here your programs start to read and write files so your work does not disappear when the script ends.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Safe file reading and writing using the with pattern in Python</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Handling simple text files such as logs, notes or basic lists from disk</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Introduction to CSV and JSON formats using clear practical examples</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Small utilities like cleaning a file, merging lines or adjusting simple data</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">6</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Error handling and debugging habits</div>
+                    <div class="module-tagline">Fix problems without feeling lost</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn to read error messages in a calm way and handle predictable issues so your scripts fail less and tell you what is wrong.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Common error types explained with short examples and fixes</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Try and except blocks for expected problems like missing files or bad input</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Using print and simple tracing methods to see what the code is doing step by step</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Simple structure for thinking about bugs instead of guessing randomly</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">7</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Practical Python scripting</div>
+                    <div class="module-tagline">Use Python to make daily tasks easier</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  This module focuses on small real scripts that save time or give simple insights using the skills you already learned.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Command line programs that take basic input and perform clear actions</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Simple automation such as renaming files or cleaning text with one run</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Using standard library modules for dates, random values and simple math</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Thinking in small steps so bigger tasks become a chain of simple ones</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">8</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Mini projects and next directions</div>
+                    <div class="module-tagline">Turn your skills into something you can show</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  The final module helps you connect everything into a small but full project and gives you ideas for where to take Python next.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Designing and building a small script such as a habit tracker, simple report generator or text cleaner</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Organising your files and code so the project is easy to explain to others</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Writing a short summary of what the program does and how you built it in clear English</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Ideas for future paths such as data analysis, test automation or web backends with Python</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+          </div>
+        </section>
+
+        <aside class="payment-column" aria-label="Python payment">
+          <div class="payment-panel">
+            <p class="pay-label">Secure your seat for Python</p>
+            <h2 class="pay-title">Python course</h2>
+            <p class="pay-subtitle">
+              This course is for people who want a clear start with Python so they can read, write and talk about simple programs that solve real problems.
+            </p>
+
+            <div class="pay-meta">
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Beginner friendly path</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Readable syntax</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Practical scripts</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Mini project at the end</span>
+              </div>
+            </div>
+
+            <div class="pay-divider"></div>
+
+            <stripe-buy-button
+              buy-button-id="buy_btn_1Sd6agAmKJqD2xzJteUZxqT9"
+              publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+            </stripe-buy-button>
+
+            <p class="pay-note">
+              After payment you receive your welcome details with schedule, links and a simple checklist to prepare for the first session.
+            </p>
+          </div>
+        </aside>
+      </main>
+
+      <footer>
+        <div>© <span id="year"></span> Stockholm IT Academy</div>
+        <div class="footer-links">
+          <a href="/">Payment page</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
