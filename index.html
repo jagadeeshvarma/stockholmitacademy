@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stockholm IT Academy</title>
+  <meta name="description" content="Secure your seat at Stockholm IT Academy. Pay online for tech and language courses with Stripe." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+
+  <style>
+    :root {
+      /* Swedish inspired palette */
+      --falun-red: #801818;
+      --falun-red-strong: #a32121;
+      --stockholm-white: #ffffff;
+      --swedish-yellow: #fada5e;
+
+      /* Derived colors for UI */
+      --bg-main: #020204;
+      --bg-shell: #050509;
+      --bg-hero: rgba(15, 15, 20, 0.96);
+      --bg-card: #0c0c12;
+      --bg-card-soft: #12121c;
+
+      --accent-primary: var(--falun-red);
+      --accent-primary-strong: var(--falun-red-strong);
+      --accent-secondary: #f05c46;
+      --accent-chip: rgba(250, 218, 94, 0.1);
+
+      --text-main: #f5f7fa;
+      --text-muted: #9aa5b1;
+      --text-soft: #838d99;
+
+      --border-subtle: #1f2933;
+      --border-strong: #3a3f4f;
+
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+
+      --shadow-soft: 0 26px 80px rgba(0, 0, 0, 0.95);
+
+      --transition-fast: 150ms ease-out;
+      --transition-med: 220ms ease-out;
+
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, #111118 0, #020204 50%, #020204 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1400px;
+      padding: 24px 16px 96px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .page {
+        padding: 28px 32px 110px;
+      }
+    }
+
+    .shell {
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at top left, rgba(128, 24, 24, 0.26), transparent 52%),
+        radial-gradient(circle at bottom right, rgba(250, 218, 94, 0.16), transparent 55%),
+        linear-gradient(to bottom right, rgba(5, 5, 9, 0.98), rgba(5, 5, 9, 0.98));
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      box-shadow: var(--shadow-soft);
+      padding: 22px 18px 28px;
+      backdrop-filter: blur(26px);
+    }
+
+    @media (min-width: 768px) {
+      .shell {
+        padding: 26px 26px 32px;
+      }
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 22% 18%, rgba(248, 250, 252, 0.9), transparent 55%),
+        conic-gradient(from 160deg, var(--falun-red), var(--swedish-yellow), #f6b8b0, var(--falun-red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.8);
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top, rgba(5, 5, 9, 0.9), rgba(5, 5, 9, 0.98));
+      border: 1px solid rgba(5, 5, 9, 0.95);
+    }
+
+    .brand-initials {
+      position: relative;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--stockholm-white);
+    }
+
+    .brand-text-main {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--stockholm-white);
+    }
+
+    .brand-text-sub {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .header-cta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background-color: rgba(28, 11, 11, 0.98);
+      border: 1px solid rgba(248, 113, 113, 0.7);
+      font-size: 11px;
+      color: var(--stockholm-white);
+      white-space: nowrap;
+    }
+
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, var(--swedish-yellow), #b68626);
+      box-shadow: 0 0 0 6px rgba(250, 218, 94, 0.35);
+    }
+
+    .primary-scroll-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, var(--accent-primary-strong), var(--swedish-yellow));
+      color: #301515;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 14px 32px rgba(128, 24, 24, 0.7);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .primary-scroll-btn span.icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: var(--radius-pill);
+      background: rgba(128, 24, 24, 0.22);
+      font-size: 13px;
+    }
+
+    .primary-scroll-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(128, 24, 24, 0.85);
+      background: linear-gradient(135deg, var(--swedish-yellow), var(--accent-primary-strong));
+    }
+
+    @media (max-width: 640px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-cta {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    .hero {
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at top left, rgba(128, 24, 24, 0.26), transparent 55%),
+        var(--bg-hero);
+      border: 1px solid rgba(148, 163, 184, 0.32);
+      padding: 18px 16px 18px;
+      margin-bottom: 22px;
+    }
+
+    @media (min-width: 960px) {
+      .hero {
+        padding: 22px 22px 22px;
+      }
+    }
+
+    .hero-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hero-main {
+      max-width: 640px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background-color: rgba(28, 11, 11, 0.98);
+      border: 1px solid rgba(248, 113, 113, 0.65);
+      font-size: 11px;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+    }
+
+    .eyebrow span.label {
+      color: var(--stockholm-white);
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-size: clamp(26px, 3.1vw, 32px);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .hero-title span.highlight {
+      color: var(--swedish-yellow);
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 540px;
+    }
+
+    .hero-subtitle strong {
+      color: var(--stockholm-white);
+      font-weight: 500;
+    }
+
+    .hero-side {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 220px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      background-color: rgba(12, 12, 18, 0.96);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      font-size: 11px;
+      color: var(--stockholm-white);
+    }
+
+    .meta-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: rgba(250, 218, 94, 0.9);
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+      align-items: center;
+    }
+
+    .hero-secondary {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background-color: rgba(12, 12, 18, 0.98);
+      color: var(--stockholm-white);
+      font-size: 13px;
+      padding: 7px 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .hero-secondary span.icon {
+      width: 18px;
+      height: 18px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .hero-secondary:hover {
+      background-color: rgba(20, 20, 30, 1);
+      border-color: rgba(209, 213, 219, 0.9);
+      transform: translateY(-1px);
+    }
+
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 18px;
+      align-items: center;
+    }
+
+    .trust-label {
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .trust-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .trust-badge {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background-color: rgba(12, 12, 18, 0.96);
+      border: 1px solid rgba(75, 85, 99, 0.95);
+      color: var(--stockholm-white);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .trust-star {
+      font-size: 12px;
+      color: var(--swedish-yellow);
+    }
+
+    .courses-section {
+      margin-top: 24px;
+    }
+
+    .courses-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .courses-title-block {
+      max-width: 520px;
+    }
+
+    .courses-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .courses-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .secure-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 15, 23, 0.98);
+      border: 1px solid rgba(148, 163, 184, 0.75);
+      font-size: 11px;
+      color: var(--stockholm-white);
+      white-space: nowrap;
+    }
+
+    .secure-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--swedish-yellow), #b68626);
+    }
+
+    .course-grid {
+      border-radius: var(--radius-xl);
+      background-color: rgba(5, 5, 10, 0.98);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      padding: 16px 14px 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    @media (max-width: 1024px) {
+      .course-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .course-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .course-card {
+      border-radius: var(--radius-lg);
+      background: linear-gradient(150deg, var(--bg-card), var(--bg-card-soft));
+      border: 1px solid var(--border-strong);
+      padding: 14px 12px 14px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: border-color var(--transition-med), box-shadow var(--transition-med), transform var(--transition-med), background var(--transition-med);
+    }
+
+    .course-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(250, 218, 94, 0.16), transparent 58%);
+      opacity: 0;
+      transition: opacity var(--transition-med);
+      pointer-events: none;
+    }
+
+    .course-card:hover {
+      border-color: rgba(250, 218, 94, 0.95);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.95);
+      transform: translateY(-2px);
+      background: linear-gradient(150deg, var(--bg-card-soft), #060609);
+    }
+
+    .course-card:hover::before {
+      opacity: 1;
+    }
+
+    .course-header-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .course-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--stockholm-white);
+    }
+
+    .course-badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      background-color: var(--accent-chip);
+      color: var(--swedish-yellow);
+      border: 1px solid rgba(250, 218, 94, 0.8);
+      white-space: nowrap;
+    }
+
+    .course-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-top: 2px;
+    }
+
+    .course-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .course-chip {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      color: var(--stockholm-white);
+      background-color: rgba(12, 12, 18, 0.96);
+    }
+
+    .course-footer {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(75, 85, 99, 0.9);
+    }
+
+    /* fix Stripe block width and centering inside cards */
+    stripe-buy-button {
+      display: block;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    stripe-buy-button iframe {
+      width: 100%;
+    }
+
+    .course-helper-text {
+      font-size: 11px;
+      color: var(--text-soft);
+      margin-top: 6px;
+    }
+
+    .faq-and-guarantee {
+      margin-top: 26px;
+      display: grid;
+      gap: 18px;
+    }
+
+    @media (min-width: 960px) {
+      .faq-and-guarantee {
+        grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+      }
+    }
+
+    .faq-block {
+      border-radius: 18px;
+      border: 1px solid var(--border-strong);
+      background-color: rgba(10, 10, 16, 0.98);
+      padding: 14px 14px 14px;
+    }
+
+    .faq-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .faq-intro {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    details {
+      border-radius: var(--radius-md);
+      background-color: rgba(5, 5, 10, 0.98);
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      padding: 8px 9px;
+      margin-bottom: 6px;
+    }
+
+    summary {
+      font-size: 12px;
+      color: var(--stockholm-white);
+      cursor: pointer;
+      list-style: none;
+    }
+
+    summary::marker,
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary span.q {
+      font-weight: 500;
+    }
+
+    details p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .guarantee-block {
+      border-radius: 18px;
+      border: 1px solid rgba(128, 24, 24, 0.7);
+      background: radial-gradient(circle at top, rgba(128, 24, 24, 0.26), rgba(10, 10, 16, 0.98));
+      padding: 14px 14px 14px;
+    }
+
+    .guarantee-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #ffe7c2;
+    }
+
+    .guarantee-body {
+      font-size: 12px;
+      color: #fde0d2;
+      line-height: 1.6;
+    }
+
+    .guarantee-points {
+      font-size: 12px;
+      color: #ffe7c2;
+      margin-top: 8px;
+      display: grid;
+      gap: 4px;
+    }
+
+    .guarantee-points span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .guarantee-bullet {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid #ffe7c2;
+    }
+
+    footer {
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      color: var(--text-soft);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(148, 163, 184, 0.7);
+      padding-bottom: 1px;
+      font-size: 11px;
+    }
+
+    .footer-links a:hover {
+      color: var(--stockholm-white);
+      border-bottom-color: var(--stockholm-white);
+    }
+
+    .sticky-strip {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 10px;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .sticky-inner {
+      pointer-events: auto;
+      max-width: var(--max-width);
+      width: calc(100% - 32px);
+      border-radius: var(--radius-pill);
+      background-color: rgba(5, 5, 9, 0.98);
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.95);
+    }
+
+    .sticky-text {
+      color: var(--text-soft);
+      max-width: 460px;
+    }
+
+    .sticky-text span {
+      color: var(--stockholm-white);
+      font-weight: 500;
+    }
+
+    .sticky-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 18px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, var(--accent-primary-strong), var(--swedish-yellow));
+      color: #301515;
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+      box-shadow: 0 14px 30px rgba(128, 24, 24, 0.8);
+    }
+
+    .sticky-btn span.icon {
+      width: 18px;
+      height: 18px;
+      border-radius: var(--radius-pill);
+      background: rgba(128, 24, 24, 0.2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .sticky-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(128, 24, 24, 0.9);
+      background: linear-gradient(135deg, var(--swedish-yellow), var(--accent-primary-strong));
+    }
+
+    @media (max-width: 640px) {
+      .sticky-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .sticky-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="shell">
+      <header>
+        <div class="brand">
+          <div class="brand-mark">
+            <div class="brand-initials">SITA</div>
+          </div>
+          <div>
+            <div class="brand-text-main">Stockholm IT Academy</div>
+            <div class="brand-text-sub">Focused training for tech and career growth</div>
+          </div>
+        </div>
+        <div class="header-cta">
+          <div class="pill-badge">
+            <span class="pill-dot"></span>
+            <span>Seats are limited in each batch</span>
+          </div>
+          <a href="#courses" class="primary-scroll-btn">
+            <span>Go to payment section</span>
+            <span class="icon">↓</span>
+          </a>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" aria-label="Introduction">
+          <div class="hero-header-row">
+            <div class="hero-main">
+              <div class="eyebrow">
+                <span class="label">Secure your seat in minutes</span>
+                <span>Payment handled by Stripe</span>
+              </div>
+
+              <h1 class="hero-title">
+                Complete your
+                <span class="highlight">course payment</span>
+              </h1>
+
+              <p class="hero-subtitle">
+                This page is only for payment. You already spoke with our team or reviewed the course details.
+                Now you can pay in a safe way and receive instant confirmation from Stripe.
+              </p>
+            </div>
+
+            <div class="hero-side">
+              <div class="hero-meta">
+                <div class="meta-item">
+                  <span class="meta-dot"></span>
+                  Live online classes with real tasks
+                </div>
+                <div class="meta-item">
+                  <span class="meta-dot"></span>
+                  Small groups for clear feedback
+                </div>
+                <div class="meta-item">
+                  <span class="meta-dot"></span>
+                  Access to mentors and support
+                </div>
+              </div>
+
+              <div class="hero-cta-row">
+                <a href="#courses" class="primary-scroll-btn">
+                  <span>Choose your course</span>
+                  <span class="icon">★</span>
+                </a>
+                <a href="#faq" class="hero-secondary">
+                  <span class="icon">?</span>
+                  <span>Payment and refund questions</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="trust-row">
+            <p class="trust-label">Why learners select Stockholm IT Academy</p>
+            <div class="trust-badges">
+              <div class="trust-badge">
+                <span class="trust-star">★</span>
+                Clear and practical syllabus
+              </div>
+              <div class="trust-badge">
+                Guidance for real job market
+              </div>
+              <div class="trust-badge">
+                Friendly support during and after course
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="courses" class="courses-section" aria-label="Course payment section">
+          <div class="courses-header">
+            <div class="courses-title-block">
+              <p class="courses-title">Select and pay for your course</p>
+              <p class="courses-subtitle">
+                Pick one course below and complete your payment with Stripe.
+                You receive a Stripe receipt and a welcome mail from us with your batch details.
+              </p>
+            </div>
+            <div class="secure-pill">
+              <span class="secure-dot"></span>
+              <span>Secure payment by Stripe</span>
+            </div>
+          </div>
+
+          <div class="course-grid">
+            <article class="course-card">
+              <div class="course-header-line">
+                <h2 class="course-name">Manual Testing</h2>
+                <span class="course-badge">Best start for testing</span>
+              </div>
+              <p class="course-subtitle">
+                Learn testing basics, test design and reporting. Work with examples that mirror real products.
+              </p>
+              <div class="course-meta-row">
+                <span class="course-chip">No coding experience needed</span>
+                <span class="course-chip">Practical test cases and tasks</span>
+              </div>
+              <div class="course-footer">
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1Sd6VVAmKJqD2xzJr0Q9odod"
+                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+                </stripe-buy-button>
+                <p class="course-helper-text">
+                  Pick this if you want a clear entry point into testing and quality work.
+                </p>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-header-line">
+                <h2 class="course-name">Automation Testing</h2>
+                <span class="course-badge">For testers with coding interest</span>
+              </div>
+              <p class="course-subtitle">
+                Learn to create automated checks for web and api, work with modern tools and build a stronger tester profile.
+              </p>
+              <div class="course-meta-row">
+                <span class="course-chip">UI and api automation practice</span>
+                <span class="course-chip">Framework setup and structure</span>
+              </div>
+              <div class="course-footer">
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1Sd6WqAmKJqD2xzJCs7QLry7"
+                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+                </stripe-buy-button>
+                <p class="course-helper-text">
+                  Good match if you already know testing basics and want automation skills.
+                </p>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-header-line">
+                <h2 class="course-name">Manual and Automation Testing</h2>
+                <span class="course-badge">Full testing path</span>
+              </div>
+              <p class="course-subtitle">
+                Combined track that covers manual testing and automation in one clear journey from beginner to job ready profile.
+              </p>
+              <div class="course-meta-row">
+                <span class="course-chip">Complete journey in one plan</span>
+                <span class="course-chip">From basics to automation projects</span>
+              </div>
+              <div class="course-footer">
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1Sd6YyAmKJqD2xzJWcR7mRXd"
+                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+                </stripe-buy-button>
+                <p class="course-helper-text">
+                  Choose this if you plan a long term career in quality and automation.
+                </p>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-header-line">
+                <h2 class="course-name">Python</h2>
+                <span class="course-badge">Coding from scratch</span>
+              </div>
+              <p class="course-subtitle">
+                Learn Python with step by step practice and use it for automation, data tasks and general scripting.
+              </p>
+              <div class="course-meta-row">
+                <span class="course-chip">Live coding sessions</span>
+                <span class="course-chip">Small focused projects</span>
+              </div>
+              <div class="course-footer">
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1Sd6agAmKJqD2xzJteUZxqT9"
+                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+                </stripe-buy-button>
+                <p class="course-helper-text">
+                  Select this if you want a simple and clear start in programming.
+                </p>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-header-line">
+                <h2 class="course-name">JavaScript and TypeScript</h2>
+                <span class="course-badge">Core of web development</span>
+              </div>
+              <p class="course-subtitle">
+                Learn the language of the browser and then add type safety with TypeScript to build strong frontend skills.
+              </p>
+              <div class="course-meta-row">
+                <span class="course-chip">Language basics and deeper topics</span>
+                <span class="course-chip">Practice with real examples</span>
+              </div>
+              <div class="course-footer">
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1Sd6YNAmKJqD2xzJpADKDfoE"
+                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+                </stripe-buy-button>
+                <p class="course-helper-text">
+                  Good choice if you aim for frontend or full stack development.
+                </p>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-header-line">
+                <h2 class="course-name">Spoken English</h2>
+                <span class="course-badge">Speak with confidence</span>
+              </div>
+              <p class="course-subtitle">
+                Improve your spoken English for interviews, daily work and meetings with guided practice and feedback.
+              </p>
+              <div class="course-meta-row">
+                <span class="course-chip">Role plays for work situations</span>
+                <span class="course-chip">Clear feedback on speaking</span>
+              </div>
+              <div class="course-footer">
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1Sd6XiAmKJqD2xzJdMYRYxKz"
+                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+                </stripe-buy-button>
+                <p class="course-helper-text">
+                  Select this if you want to sound clear, natural and confident in English.
+                </p>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <section id="faq" class="faq-and-guarantee" aria-label="Payment information and FAQs">
+        <div class="faq-block">
+         <h2 class="faq-title">Payment and course questions</h2>
+<p class="faq-intro">
+  Here are answers to common questions before you join. These help you know what you receive, how the course works and what to expect after you pay.
+</p>
+
+<details>
+  <summary><span class="q">What happens after I pay</span></summary>
+  <p>
+    You get a Stripe receipt immediately. Within one working day our team sends a welcome mail with your batch schedule, meeting links, study plan and next steps. You do not need to do anything else.
+  </p>
+</details>
+
+<details>
+  <summary><span class="q">Do I need any previous experience</span></summary>
+  <p>
+    Manual Testing and Spoken English do not need any background. Python and JavaScript need basic comfort with a computer. Automation Testing and the combined track need some idea of testing or coding, but we guide you step by step.
+  </p>
+</details>
+
+<details>
+  <summary><span class="q">How are classes conducted</span></summary>
+  <p>
+    All sessions are live on Zoom with real tasks, examples and feedback. You also receive access to recordings and support through mail or community channels.
+  </p>
+</details>
+
+<details>
+  <summary><span class="q">Will I get study material</span></summary>
+  <p>
+    Yes. Every course includes notes, assignments, real examples and guided practice tasks. These stay with you even after the course ends.
+  </p>
+</details>
+
+<details>
+  <summary><span class="q">Do you help with job preparation</span></summary>
+  <p>
+    Yes. Every learner receives guidance for LinkedIn, resume, interview preparation and assignment help. If you join our testing or coding courses, you also get project level practice that supports real job applications.
+  </p>
+</details>
+
+<details>
+  <summary><span class="q">How do I choose the right course</span></summary>
+  <p>
+    Manual Testing is good for starting a testing career. Automation Testing is good if you want coding plus testing. Python and JavaScript are good for programming careers. Spoken English is for interviews and workplace communication.
+  </p>
+</details>
+
+        </div>
+
+<aside class="guarantee-block">
+  <h2 class="guarantee-title">Our promise to every learner</h2>
+  <p class="guarantee-body">
+    When you join a Stockholm IT Academy course you receive clear structure, practical tasks and steady support. We keep your learning simple, real and focused.
+  </p>
+  <div class="guarantee-points">
+    <span>
+      <span class="guarantee-bullet"></span>
+      Weekly plan so you always know what to learn and practice
+    </span>
+    <span>
+      <span class="guarantee-bullet"></span>
+      Real project tasks that reflect how teams work in companies
+    </span>
+    <span>
+  <span class="guarantee-bullet"></span>
+  Courses updated each batch so new learners get the latest examples and guidance
+</span>
+    <span>
+      <span class="guarantee-bullet"></span>
+      Friendly support through mail and the community when you need help
+    </span>
+    <span>
+      <span class="guarantee-bullet"></span>
+      Awarded Educator of the Year in 2024 and nominated again in 2025
+    </span>
+    <span>
+      <span class="guarantee-bullet"></span>
+      Learners from our testing and coding tracks now working in well known teams in Sweden
+    </span>
+  </div>
+</aside>
+
+      </section>
+
+      <footer>
+        <div>© <span id="year"></span> Stockholm IT Academy. All rights reserved.</div>
+        <div class="footer-links">
+          <a href="mailto:ask@sita.dev">ask@sita.dev</a>
+          <a href="https://www.sita.dev" target="_blank" rel="noopener noreferrer">Visit main website</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="sticky-strip">
+    <div class="sticky-inner">
+      <div class="sticky-text">
+        <span>Ready to join! </span> Select your course and complete the Stripe payment to secure your seat.
+      </div>
+      <a href="#courses" class="sticky-btn">
+        <span>Go to payment section</span>
+        <span class="icon">↳</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
