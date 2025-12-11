@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Automation Testing Curriculum – Stockholm IT Academy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+
+  <style>
+    :root {
+      --falun-red: #801818;
+      --swedish-yellow: #fada5e;
+      --white: #ffffff;
+      --bg-main: #020204;
+      --bg-shell: #050509;
+      --bg-card: #0c0c12;
+      --bg-card-soft: #12121c;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --text-soft: #6b7280;
+      --border-subtle: rgba(148,163,184,0.55);
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --shadow-shell: 0 30px 120px rgba(0,0,0,0.9);
+      --shadow-card: 0 20px 70px rgba(0,0,0,0.85);
+      --transition-fast: 140ms ease-out;
+      --transition-med: 220ms ease-out;
+      --max-width: 1160px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(248, 250, 252, 0.08), transparent 55%),
+        radial-gradient(circle at 120% 0, rgba(250, 218, 94, 0.08), transparent 55%),
+        radial-gradient(circle at bottom, rgba(128, 24, 24, 0.55), #020204 68%, #020204 100%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 24px 16px 40px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: var(--max-width);
+    }
+
+    .shell {
+      background:
+        radial-gradient(circle at top left, rgba(128, 24, 24, 0.48), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(16, 24, 40, 0.95), rgba(5, 5, 9, 0.98));
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(75, 85, 99, 0.85);
+      box-shadow: var(--shadow-shell);
+      padding: 24px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(55, 65, 81, 0.85);
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 22% 18%, rgba(248, 250, 252, 0.9), transparent 55%),
+        conic-gradient(from 160deg, var(--falun-red), var(--swedish-yellow), #f6b8b0, var(--falun-red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.8);
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top, rgba(5, 5, 9, 0.9), rgba(5, 5, 9, 0.98));
+      border: 1px solid rgba(5, 5, 9, 0.95);
+    }
+
+    .brand-initials {
+      position: relative;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .brand-text-main {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .brand-text-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .header-link {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .header-link span.icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+
+    .header-link:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(249, 250, 251, 0.6);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 640px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-link {
+        align-self: flex-end;
+      }
+    }
+
+    .hero {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
+      padding: 16px 16px 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.75);
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(248, 250, 252, 0.2);
+      background: rgba(15, 23, 42, 0.8);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .hero-eyebrow span.label {
+      color: var(--swedish-yellow);
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .hero-title span.highlight {
+      color: var(--swedish-yellow);
+    }
+
+    .hero-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 640px;
+      line-height: 1.6;
+    }
+
+    .layout {
+      margin-top: 18px;
+      display: grid;
+      gap: 18px;
+    }
+
+    @media (min-width: 920px) {
+      .layout {
+        grid-template-columns: minmax(0, 1.7fr) minmax(290px, 0.9fr);
+        align-items: flex-start;
+      }
+    }
+
+    .curriculum-column {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .curriculum-intro {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .curriculum-note {
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+
+    .module-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    details.module {
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(12, 12, 18, 0.98));
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      padding: 10px 11px;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.7);
+      transition: border-color var(--transition-med), transform var(--transition-med), box-shadow var(--transition-med), background-color var(--transition-med);
+    }
+
+    details.module[open] {
+      border-color: rgba(250, 218, 94, 0.8);
+      transform: translateY(-1px);
+      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.85);
+      background: radial-gradient(circle at top left, rgba(128, 24, 24, 0.5), rgba(12, 12, 18, 0.98));
+    }
+
+    summary.module-summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    summary.module-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .module-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .module-number {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, rgba(250, 218, 94, 0.9), rgba(161, 98, 7, 0.9));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1f2937;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.7);
+    }
+
+    .module-title-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .module-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .module-tagline {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .module-chevron {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    details[open] .module-chevron {
+      transform: rotate(90deg);
+      border-color: rgba(250, 218, 94, 0.8);
+      color: var(--swedish-yellow);
+    }
+
+    .module-body {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(55, 65, 81, 0.8);
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .module-body p {
+      margin-bottom: 6px;
+    }
+
+    .payment-column {
+      position: relative;
+    }
+
+    .payment-panel {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(250, 218, 94, 0.85);
+      background:
+        radial-gradient(circle at top left, rgba(250, 218, 94, 0.12), transparent 55%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(5, 5, 9, 0.98));
+      padding: 16px 14px 16px;
+      box-shadow: var(--shadow-card);
+    }
+
+    @media (min-width: 920px) {
+      .payment-panel {
+        position: sticky;
+        top: 18px;
+      }
+    }
+
+    .pay-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .pay-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .pay-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .pay-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .pay-chip {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      padding: 4px 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pay-chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--swedish-yellow);
+      box-shadow: 0 0 10px rgba(250, 218, 94, 0.8);
+    }
+
+    .pay-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(75, 85, 99, 0.9), transparent);
+      margin: 10px 0;
+    }
+
+    stripe-buy-button {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    stripe-buy-button iframe {
+      width: 100% !important;
+      margin: 0 auto;
+    }
+
+    .pay-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(31, 41, 55, 0.85);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="shell">
+
+      <header>
+        <div class="brand">
+          <div class="brand-mark">
+            <span class="brand-initials">SITA</span>
+          </div>
+          <div>
+            <div class="brand-text-main">Stockholm IT Academy</div>
+            <div class="brand-text-sub">Automation Testing course curriculum</div>
+          </div>
+        </div>
+        <a href="/" class="header-link">
+          <span class="icon">←</span>
+          <span>Back to payment page</span>
+        </a>
+      </header>
+
+      <section class="hero" aria-label="Automation Testing course overview">
+        <div class="hero-eyebrow">
+          <span class="label">Automation Testing curriculum</span>
+          <span>Playwright and JavaScript for real projects</span>
+        </div>
+        <h1 class="hero-title">
+          Learn Automation Testing in a
+          <span class="highlight">modern and practical</span>
+          way
+        </h1>
+        <p class="hero-subtitle">
+          This course focuses on Playwright with JavaScript and shows you how automation supports real testing work. You learn to build clean test scripts, structure them for projects and understand where automation gives the most value in a team.
+        </p>
+      </section>
+
+      <main class="layout">
+        <section class="curriculum-column" aria-label="Automation Testing curriculum">
+          <p class="curriculum-intro">
+            The course is organised in modules that link together. You start with core ideas and basic JavaScript and move towards a small but real automation project.
+          </p>
+          <p class="curriculum-note">
+            You do not need a coding background to begin. We explain JavaScript and Playwright in simple steps and repeat key ideas with practice.
+          </p>
+
+          <div class="module-list">
+            <details class="module" open>
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">1</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Why automation and where Playwright fits</div>
+                    <div class="module-tagline">Understand the place of automation in testing</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You see what automation can and cannot replace, how it supports manual testing and why many teams use Playwright today.
+                </p>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">2</div>
+                  <div class="module-title-text">
+                    <div class="module-title">JavaScript basics for testers</div>
+                    <div class="module-tagline">Use only the JavaScript you need</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  We cover variables, functions, simple conditions, loops and objects in a way that connects to testing tasks instead of generic coding examples.
+                </p>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">3</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Playwright fundamentals</div>
+                    <div class="module-tagline">Control the browser with confidence</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You install Playwright, understand projects, browsers and contexts and learn how to open pages, click elements, type text and work with basic selectors.
+                </p>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">4</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Writing your first automated tests</div>
+                    <div class="module-tagline">Move from scripts to stable test cases</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You build your first test suite, add assertions and learn about waiting, timeouts and flaky tests so your checks stay stable.
+                </p>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">5</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Locators, test data and helper functions</div>
+                    <div class="module-tagline">Keep your tests readable and reusable</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  This part focuses on good locators, simple test data patterns and small helper functions that you can reuse across tests.
+                </p>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">6</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Page Object Model in Playwright</div>
+                    <div class="module-tagline">Organise test code like real projects</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn the Page Object pattern, when to use it and how to structure your pages and tests so changes are easier to handle.
+                </p>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">7</div>
+                  <div class="module-title-text">
+                    <div class="module-title">API and UI together</div>
+                    <div class="module-tagline">Speed up checks with backend calls</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You send and verify basic API requests with Playwright and combine them with UI steps for faster and more focused tests.
+                </p>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">8</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Small automation project</div>
+                    <div class="module-tagline">Connect all skills in one flow</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  In the final module you work on a guided mini project. You create a small test suite for a sample product, use page objects and simple reporting and share your results in a structured way.
+                </p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <aside class="payment-column" aria-label="Automation Testing payment">
+          <div class="payment-panel">
+            <p class="pay-label">Secure your seat for Automation Testing</p>
+            <h2 class="pay-title">Automation Testing course</h2>
+            <p class="pay-subtitle">
+              This course is for people who want to learn Playwright with JavaScript in a clear, guided way, even if they are new to coding.
+            </p>
+
+            <div class="pay-meta">
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Playwright and JavaScript</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Beginner friendly pace</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Project based learning</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Fits with manual testing</span>
+              </div>
+            </div>
+
+            <div class="pay-divider"></div>
+
+            <stripe-buy-button
+              buy-button-id="buy_btn_1Sd6WqAmKJqD2xzJCs7QLry7"
+              publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+            </stripe-buy-button>
+
+            <p class="pay-note">
+              After payment you receive your welcome message with schedule, links and simple instructions for your first setup.
+            </p>
+          </div>
+        </aside>
+      </main>
+
+      <footer>
+        <div>© <span id="year"></span> Stockholm IT Academy</div>
+        <div class="footer-links">
+          <a href="/">Payment page</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

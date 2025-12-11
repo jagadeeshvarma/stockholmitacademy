@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Manual Testing Curriculum – Stockholm IT Academy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Manual Testing curriculum at Stockholm IT Academy. Learn software testing skills with a clear and practical path and pay securely with Stripe." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+
+  <style>
+    :root {
+      /* Same palette as main payments page */
+      --falun-red: #801818;
+      --falun-red-strong: #a32121;
+      --stockholm-white: #ffffff;
+      --swedish-yellow: #fada5e;
+
+      --bg-main: #020204;
+      --bg-shell: #050509;
+      --bg-card: #0c0c12;
+      --bg-card-soft: #12121c;
+
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --text-soft: #6b7280;
+
+      --border-subtle: rgba(148, 163, 184, 0.55);
+
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+
+      --shadow-shell: 0 30px 120px rgba(0, 0, 0, 0.9);
+      --shadow-card: 0 20px 70px rgba(0, 0, 0, 0.85);
+
+      --transition-fast: 140ms ease-out;
+      --transition-med: 220ms ease-out;
+
+      --max-width: 1160px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(248, 250, 252, 0.08), transparent 55%),
+        radial-gradient(circle at 120% 0, rgba(250, 218, 94, 0.08), transparent 55%),
+        radial-gradient(circle at bottom, rgba(128, 24, 24, 0.55), #020204 68%, #020204 100%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 24px 16px 40px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: var(--max-width);
+    }
+
+    .shell {
+      background:
+        radial-gradient(circle at top left, rgba(128, 24, 24, 0.48), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(16, 24, 40, 0.95), rgba(5, 5, 9, 0.98));
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(75, 85, 99, 0.85);
+      box-shadow: var(--shadow-shell);
+      padding: 22px 18px 24px;
+    }
+
+    @media (min-width: 900px) {
+      .shell {
+        padding: 24px 24px 26px;
+      }
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(55, 65, 81, 0.85);
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 22% 18%, rgba(248, 250, 252, 0.9), transparent 55%),
+        conic-gradient(from 160deg, var(--falun-red), var(--swedish-yellow), #f6b8b0, var(--falun-red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.8);
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top, rgba(5, 5, 9, 0.9), rgba(5, 5, 9, 0.98));
+      border: 1px solid rgba(5, 5, 9, 0.95);
+    }
+
+    .brand-initials {
+      position: relative;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--stockholm-white);
+    }
+
+    .brand-text-main {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--stockholm-white);
+    }
+
+    .brand-text-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .header-link {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .header-link span.icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+
+    .header-link:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(249, 250, 251, 0.6);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 640px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-link {
+        align-self: flex-end;
+      }
+    }
+
+    .hero {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
+      padding: 16px 14px 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.75);
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(248, 250, 252, 0.2);
+      background: rgba(15, 23, 42, 0.8);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .hero-eyebrow span.label {
+      color: var(--swedish-yellow);
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-size: clamp(22px, 3vw, 26px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--stockholm-white);
+      margin-bottom: 6px;
+    }
+
+    .hero-title span.highlight {
+      color: var(--swedish-yellow);
+    }
+
+    .hero-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 640px;
+      line-height: 1.6;
+    }
+
+    .hero-subtitle strong {
+      color: var(--stockholm-white);
+      font-weight: 500;
+    }
+
+    .layout {
+      margin-top: 18px;
+      display: grid;
+      gap: 18px;
+    }
+
+    @media (min-width: 920px) {
+      .layout {
+        grid-template-columns: minmax(0, 1.7fr) minmax(290px, 0.9fr);
+        align-items: flex-start;
+      }
+    }
+
+    .curriculum-column {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .curriculum-intro {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .curriculum-note {
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+
+    .module-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    details.module {
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(12, 12, 18, 0.98));
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      padding: 10px 11px;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.7);
+      transition: border-color var(--transition-med), transform var(--transition-med), box-shadow var(--transition-med), background-color var(--transition-med);
+    }
+
+    details.module[open] {
+      border-color: rgba(250, 218, 94, 0.8);
+      transform: translateY(-1px);
+      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.85);
+      background: radial-gradient(circle at top left, rgba(128, 24, 24, 0.5), rgba(12, 12, 18, 0.98));
+    }
+
+    summary.module-summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    summary.module-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .module-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .module-number {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, rgba(250, 218, 94, 0.9), rgba(161, 98, 7, 0.9));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1f2937;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.7);
+    }
+
+    .module-title-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .module-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--stockholm-white);
+    }
+
+    .module-tagline {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .module-chevron {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    details[open] .module-chevron {
+      transform: rotate(90deg);
+      border-color: rgba(250, 218, 94, 0.8);
+      color: var(--swedish-yellow);
+    }
+
+    .module-body {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(55, 65, 81, 0.8);
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .module-body p {
+      margin-bottom: 6px;
+    }
+
+    .module-list-items {
+      list-style: none;
+      margin-top: 4px;
+      display: grid;
+      gap: 3px;
+    }
+
+    .module-list-items li {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .module-bullet {
+      margin-top: 5px;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.9);
+      flex-shrink: 0;
+    }
+
+    .module-bullet-text {
+      color: var(--text-muted);
+    }
+
+    .outcome-card {
+      margin-top: 10px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.92), rgba(10, 10, 16, 0.98));
+      padding: 10px 12px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.8);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .outcome-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--stockholm-white);
+      margin-bottom: 4px;
+    }
+
+    .outcome-points {
+      display: grid;
+      gap: 2px;
+      list-style: none;
+    }
+
+    .outcome-points li {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .outcome-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(250, 218, 94, 0.85);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .payment-column {
+      position: relative;
+    }
+
+    .payment-panel {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(250, 218, 94, 0.85);
+      background:
+        radial-gradient(circle at top left, rgba(250, 218, 94, 0.12), transparent 55%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(5, 5, 9, 0.98));
+      padding: 16px 14px 16px;
+      box-shadow: var(--shadow-card);
+    }
+
+    @media (min-width: 920px) {
+      .payment-panel {
+        position: sticky;
+        top: 18px;
+      }
+    }
+
+    .pay-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .pay-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--stockholm-white);
+      margin-bottom: 4px;
+    }
+
+    .pay-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .pay-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .pay-chip {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      padding: 4px 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pay-chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--swedish-yellow);
+      box-shadow: 0 0 10px rgba(250, 218, 94, 0.8);
+    }
+
+    .pay-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(75, 85, 99, 0.9), transparent);
+      margin: 10px 0;
+    }
+
+    .pay-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .pay-link-row {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 11px;
+    }
+
+    .pay-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(156, 163, 175, 0.9);
+      padding-bottom: 1px;
+    }
+
+    stripe-buy-button {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    stripe-buy-button iframe {
+      width: 100% !important;
+      margin: 0 auto;
+    }
+
+    .mobile-pay-strip {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 12px;
+      display: none;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .mobile-pay-inner {
+      pointer-events: auto;
+      width: calc(100% - 32px);
+      max-width: var(--max-width);
+      border-radius: var(--radius-pill);
+      background: rgba(5, 5, 9, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .mobile-pay-text span {
+      color: var(--stockholm-white);
+      font-weight: 500;
+    }
+
+    .mobile-pay-btn {
+      border-radius: var(--radius-pill);
+      border: none;
+      background: linear-gradient(135deg, var(--falun-red), var(--swedish-yellow));
+      color: #1f2933;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 7px 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.9);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .mobile-pay-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.95);
+    }
+
+    .mobile-pay-btn span.icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.12);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+
+    @media (max-width: 919px) {
+      .mobile-pay-strip {
+        display: flex;
+      }
+
+      .payment-panel {
+        margin-bottom: 70px;
+      }
+    }
+
+    footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(31, 41, 55, 0.85);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(156, 163, 175, 0.9);
+      padding-bottom: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="shell">
+      <header>
+        <div class="brand">
+          <div class="brand-mark">
+            <span class="brand-initials">SITA</span>
+          </div>
+          <div>
+            <div class="brand-text-main">Stockholm IT Academy</div>
+            <div class="brand-text-sub">Manual Testing course curriculum</div>
+          </div>
+        </div>
+        <a href="/" class="header-link">
+          <span class="icon">←</span>
+          <span>Back to payment page</span>
+        </a>
+      </header>
+
+      <section class="hero" aria-label="Manual Testing course overview">
+        <div class="hero-eyebrow">
+          <span class="label">Manual Testing curriculum</span>
+          <span>Clear and practical path for beginners</span>
+        </div>
+        <h1 class="hero-title">
+          Learn Manual Testing in a
+          <span class="highlight">structured and guided</span>
+          way
+        </h1>
+<p class="hero-subtitle">
+  The Manual Testing course builds your skills step by step. You learn how testers understand requirements, design meaningful tests, find issues and explain them clearly to a team. Each module connects theory to simple practical work so you gain confidence as you move forward. <strong>When you want to join you can secure your seat through the payment panel on the right.</strong>
+</p>
+
+      </section>
+
+      <main class="layout">
+        <section class="curriculum-column" aria-label="Manual Testing curriculum">
+          <p class="curriculum-intro">
+            The course is built in modules that connect to each other. Every module has live sessions, guided practice and simple tasks that feel close to real work.
+          </p>
+          <p class="curriculum-note">
+            Below you see what we cover. You do not need any testing or coding background to start. We move step by step and repeat key ideas in different parts of the course.
+          </p>
+
+          <div class="module-list">
+            <details class="module" open>
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">1</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Role of a tester and basics of quality</div>
+                    <div class="module-tagline">Understand why testing matters in real teams</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  We start with a simple picture of how software is built and where a tester fits in that picture. The goal here is to understand the daily work of a tester.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">What quality means for users and for a business</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Difference between development, testing and support work</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Software life cycle and simple view of project stages</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">What testers do in each stage and what they deliver</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">2</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Core testing ideas and key words</div>
+                    <div class="module-tagline">Build the language and mindset of testing</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  In this module we build your basic testing vocabulary and show how a tester looks at a product in a different way from regular users.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">What is a defect and what is a requirement</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Functional and non functional testing in simple terms</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Levels of testing and where a manual tester spends time</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Exploratory testing and structured testing</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">3</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Test design techniques</div>
+                    <div class="module-tagline">Move from random checking to thoughtful testing</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  Here we learn how to design test ideas in a smart way so that you cover important risks without getting lost in endless combinations.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Equivalence classes and boundaries with real examples</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Decision tables and simple state based tests</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Using user journeys and business flows for test ideas</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">How to share test ideas with a team so they are clear</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">4</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Test cases, checklists and scenarios</div>
+                    <div class="module-tagline">Write tests that someone else can follow</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  In this module we turn ideas into test cases. We focus on clarity. Another person should be able to pick your tests and run them without confusion.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Parts of a good test case and what to avoid</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">When to use detailed steps and when a checklist is enough</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Positive, negative and edge case scenarios</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Designing test data and simple data sets</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">5</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Bug reporting and communication</div>
+                    <div class="module-tagline">Explain problems in a way that builds trust</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  This part of the course trains you to report issues in a simple and respectful way. The goal is to help the team fix problems quickly without finger pointing.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Good bug reports and common mistakes with examples</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Severity and priority with clear examples from projects</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Screenshots, video and simple logs as support for reports</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">How to retest, confirm and close issues</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">6</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Test execution and coverage</div>
+                    <div class="module-tagline">Plan your day as a tester and track progress</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  In this module you learn how to run tests in a planned way and how to explain what is done and what still needs attention.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Execution cycles, smoke checks and focused checks</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Regression sessions and simple risk based selection</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Simple progress reports for daily stand up and status mails</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">When to stop testing and how to explain that to others</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">7</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Agile way of working and teamwork</div>
+                    <div class="module-tagline">Work with developers and product owners in sprints</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  Here we connect testing skills with the way modern teams work. You learn where you fit in stand ups, planning and review meetings.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">User stories, acceptance criteria and test ideas from stories</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">What testers share in stand ups without too much detail</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">How to give feedback that is helpful and kind</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Simple way to prepare for demo and review meetings</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">8</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Tools, mini projects and job preparation</div>
+                    <div class="module-tagline">Connect your training to real job search steps</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  In the final part we put your skills into practice through guided mini projects and job preparation steps that are realistic for new testers.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Working with a test case tool and a bug tracking tool</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Mini project where you test a small product end to end and share results</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">How to talk about your learning in interviews with real examples</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Simple plan for next steps if you later want to move into automation</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+          </div>
+
+          <div class="outcome-card">
+            <div class="outcome-title">At the end of the Manual Testing course you can</div>
+            <ul class="outcome-points">
+              <li>
+                <span class="outcome-dot"></span>
+                <span>Read basic requirements and find clear test ideas</span>
+              </li>
+              <li>
+                <span class="outcome-dot"></span>
+                <span>Write test cases that someone else can run</span>
+              </li>
+              <li>
+                <span class="outcome-dot"></span>
+                <span>Report bugs in a way that helps developers fix them</span>
+              </li>
+              <li>
+                <span class="outcome-dot"></span>
+                <span>Explain your daily work as a tester in simple language during interviews</span>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <aside class="payment-column" aria-label="Manual Testing payment">
+          <div id="pay" class="payment-panel">
+            <p class="pay-label">Secure your seat for Manual Testing</p>
+            <h2 class="pay-title">Manual Testing course</h2>
+            <p class="pay-subtitle">
+              Pay online with Stripe. You receive a receipt from Stripe and a welcome mail from our team with your schedule and links.
+            </p>
+
+            <div class="pay-meta">
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Beginner friendly</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Live online sessions</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Practical tasks</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Support during course</span>
+              </div>
+            </div>
+
+            <div class="pay-divider"></div>
+
+            <stripe-buy-button
+              buy-button-id="buy_btn_1Sd6VVAmKJqD2xzJr0Q9odod"
+              publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+            </stripe-buy-button>
+
+            <p class="pay-note">
+              If you have any question before paying you can reply to your mail thread with us or write to ask@sita.dev.
+            </p>
+
+            <div class="pay-link-row">
+              <a href="/" class="pay-link">View all courses and payment options</a>
+            </div>
+          </div>
+        </aside>
+      </main>
+
+      <footer>
+        <div>© <span id="year"></span> Stockholm IT Academy</div>
+        <div class="footer-links">
+          <a href="/">Payment page</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="mobile-pay-strip">
+    <div class="mobile-pay-inner">
+      <div class="mobile-pay-text">
+        <span>Manual Testing</span> seat is still free to book.
+      </div>
+      <button class="mobile-pay-btn" type="button" id="mobilePayBtn">
+        <span>Go to payment</span>
+        <span class="icon">↗</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    var mobileBtn = document.getElementById("mobilePayBtn");
+    if (mobileBtn) {
+      mobileBtn.addEventListener("click", function () {
+        var paySection = document.getElementById("pay");
+        if (paySection) {
+          paySection.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      });
+    }
+  </script>
+</body>
+</html>
