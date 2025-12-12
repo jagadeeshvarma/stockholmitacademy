@@ -357,6 +357,71 @@
       margin-bottom: 6px;
     }
 
+    .module-list-items {
+      list-style: none;
+      margin-top: 4px;
+      display: grid;
+      gap: 3px;
+    }
+
+    .module-list-items li {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .module-bullet {
+      margin-top: 5px;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.9);
+      flex-shrink: 0;
+    }
+
+    .module-bullet-text {
+      color: var(--text-muted);
+    }
+
+    .outcome-card {
+      margin-top: 10px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.92), rgba(10, 10, 16, 0.98));
+      padding: 10px 12px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.8);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .outcome-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .outcome-points {
+      display: grid;
+      gap: 2px;
+      list-style: none;
+    }
+
+    .outcome-points li {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .outcome-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(250, 218, 94, 0.85);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
     .payment-column {
       position: relative;
     }
@@ -430,6 +495,12 @@
       margin: 10px 0;
     }
 
+    .pay-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
     stripe-buy-button {
       display: flex;
       justify-content: center;
@@ -443,12 +514,6 @@
       margin: 0 auto;
     }
 
-    .pay-note {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 8px;
-    }
-
     footer {
       margin-top: 24px;
       padding-top: 10px;
@@ -460,13 +525,24 @@
       font-size: 11px;
       color: var(--text-soft);
     }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(156, 163, 175, 0.9);
+      padding-bottom: 1px;
+    }
   </style>
 </head>
-
 <body>
   <div class="page">
     <div class="shell">
-
       <header>
         <div class="brand">
           <div class="brand-mark">
@@ -501,7 +577,7 @@
       <main class="layout">
         <section class="curriculum-column" aria-label="Automation Testing curriculum">
           <p class="curriculum-intro">
-            The course is organised in modules that link together. You start with core ideas and basic JavaScript and move towards a small but real automation project.
+            The course is organised in modules that link together. You start with core ideas and basic JavaScript and move towards a real automation project.
           </p>
           <p class="curriculum-note">
             You do not need a coding background to begin. We explain JavaScript and Playwright in simple steps and repeat key ideas with practice.
@@ -521,8 +597,14 @@
               </summary>
               <div class="module-body">
                 <p>
-                  You see what automation can and cannot replace, how it supports manual testing and why many teams use Playwright today.
+                  We start by making automation feel real and practical. You learn what automation is meant to solve, what it cannot solve, and how teams decide what to automate.
                 </p>
+                <ul class="module-list-items">
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Manual testing and automation testing and how they support each other</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">What makes a test case a good automation candidate and what makes it a bad choice</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Regression testing basics and where automation saves time</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Playwright overview and why modern teams choose it</span></li>
+                </ul>
               </div>
             </details>
 
@@ -539,8 +621,14 @@
               </summary>
               <div class="module-body">
                 <p>
-                  We cover variables, functions, simple conditions, loops and objects in a way that connects to testing tasks instead of generic coding examples.
+                  Here you build the JavaScript base you need for Playwright. We keep it simple and connect every topic to test automation tasks.
                 </p>
+                <ul class="module-list-items">
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Variables, data types and simple coding rules</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Functions and how to reuse steps like login and logout</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">If else logic for expected vs actual behaviour</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Loops, arrays and objects for test data and repeated checks</span></li>
+                </ul>
               </div>
             </details>
 
@@ -557,8 +645,14 @@
               </summary>
               <div class="module-body">
                 <p>
-                  You install Playwright, understand projects, browsers and contexts and learn how to open pages, click elements, type text and work with basic selectors.
+                  You set up Playwright properly and learn the building blocks used in real projects, not only quick demos.
                 </p>
+                <ul class="module-list-items">
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Installing Playwright and running tests locally</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Browser, context and page concepts in simple language</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Navigation, clicks, typing and form interactions</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Intro to locators and why stable selectors matter</span></li>
+                </ul>
               </div>
             </details>
 
@@ -575,8 +669,14 @@
               </summary>
               <div class="module-body">
                 <p>
-                  You build your first test suite, add assertions and learn about waiting, timeouts and flaky tests so your checks stay stable.
+                  This module turns your actions into real test cases with validations. You learn how to make tests readable, stable and useful.
                 </p>
+                <ul class="module-list-items">
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Test structure and how to name tests clearly</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Assertions for text, visibility, URLs and states</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Waiting basics and how Playwright reduces timing issues</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Common flaky test reasons and how to fix them</span></li>
+                </ul>
               </div>
             </details>
 
@@ -593,8 +693,14 @@
               </summary>
               <div class="module-body">
                 <p>
-                  This part focuses on good locators, simple test data patterns and small helper functions that you can reuse across tests.
+                  You learn how to build tests that do not break with small UI changes and how to reuse steps so you write less code.
                 </p>
+                <ul class="module-list-items">
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Role based selectors, text selectors and safe locator habits</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Simple ways to store and reuse test data</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Helper functions for repeated flows like login and checkout</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Clean code basics for test automation projects</span></li>
+                </ul>
               </div>
             </details>
 
@@ -611,8 +717,14 @@
               </summary>
               <div class="module-body">
                 <p>
-                  You learn the Page Object pattern, when to use it and how to structure your pages and tests so changes are easier to handle.
+                  This module teaches structure. You learn how teams keep automation suites maintainable when the product changes.
                 </p>
+                <ul class="module-list-items">
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">What Page Object Model is and why teams use it</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Turning a messy test into clear page objects</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Where to keep locators, actions and assertions</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Simple folder structure for projects</span></li>
+                </ul>
               </div>
             </details>
 
@@ -629,8 +741,14 @@
               </summary>
               <div class="module-body">
                 <p>
-                  You send and verify basic API requests with Playwright and combine them with UI steps for faster and more focused tests.
+                  You learn how API checks support UI testing. You also learn how to use API calls to prepare data and reduce slow UI steps.
                 </p>
+                <ul class="module-list-items">
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">HTTP basics, request types and response checks</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Playwright API requests and response validation</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Using API calls to set up test state for UI flows</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Simple strategy to decide what belongs in API vs UI tests</span></li>
+                </ul>
               </div>
             </details>
 
@@ -639,7 +757,7 @@
                 <div class="module-header-left">
                   <div class="module-number">8</div>
                   <div class="module-title-text">
-                    <div class="module-title">Small automation project</div>
+                    <div class="module-title">Automation project</div>
                     <div class="module-tagline">Connect all skills in one flow</div>
                   </div>
                 </div>
@@ -647,10 +765,26 @@
               </summary>
               <div class="module-body">
                 <p>
-                  In the final module you work on a guided mini project. You create a small test suite for a sample product, use page objects and simple reporting and share your results in a structured way.
+                  In the final module you work on a guided mini project. You build a automation suite that looks like a real project, with clean structure and clear results.
                 </p>
+                <ul class="module-list-items">
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Plan an automation scope based on risk and value</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Build a test suite with page objects and readable test names</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Add useful assertions, stable waits and debugging helpers</span></li>
+                  <li><span class="module-bullet"></span><span class="module-bullet-text">Run tests, review results and explain what you automated and why</span></li>
+                </ul>
               </div>
             </details>
+          </div>
+
+          <div class="outcome-card">
+            <div class="outcome-title">At the end of the Automation Testing course you can</div>
+            <ul class="outcome-points">
+              <li><span class="outcome-dot"></span><span>Write Playwright tests in JavaScript with clear structure</span></li>
+              <li><span class="outcome-dot"></span><span>Use stable locators, good assertions and safe waiting</span></li>
+              <li><span class="outcome-dot"></span><span>Organise tests using page objects for maintainable projects</span></li>
+              <li><span class="outcome-dot"></span><span>Explain your automation approach and project work in interviews</span></li>
+            </ul>
           </div>
         </section>
 

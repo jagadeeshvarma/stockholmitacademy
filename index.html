@@ -805,6 +805,69 @@
         justify-content: center;
       }
     }
+        .curriculum-section {
+      margin-top: 26px;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at top left, rgba(250, 218, 94, 0.12), transparent 60%),
+        rgba(5, 5, 10, 0.98);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      padding: 16px 14px 18px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+    }
+
+    .curriculum-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--stockholm-white);
+    }
+
+    .curriculum-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    @media (min-width: 640px) {
+      .curriculum-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 960px) {
+      .curriculum-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .curriculum-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(250, 218, 94, 0.7);
+      background:
+        radial-gradient(circle at top, rgba(250, 218, 94, 0.18), transparent 60%),
+        rgba(12, 12, 18, 0.96);
+      color: var(--swedish-yellow);
+      font-size: 12px;
+      text-decoration: none;
+      box-shadow: 0 0 16px rgba(250, 218, 94, 0.25);
+      transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med), background var(--transition-med);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .curriculum-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--swedish-yellow);
+      box-shadow: 0 0 22px rgba(250, 218, 94, 0.5);
+      background:
+        radial-gradient(circle at top, rgba(250, 218, 94, 0.26), transparent 60%),
+        rgba(8, 8, 14, 1);
+    }
+
   </style>
 </head>
 <body>
@@ -1140,12 +1203,21 @@
 </aside>
 
       </section>
+      <section class="curriculum-section">
+        <h2 class="curriculum-title">View full curriculum for each course</h2>
 
+        <div class="curriculum-grid">
+          <a class="curriculum-btn" href="manual-testing.html">Manual Testing Curriculum</a>
+          <a class="curriculum-btn" href="automation-testing.html">Automation Testing Curriculum</a>
+          <a class="curriculum-btn" href="python.html">Python Curriculum</a>
+          <a class="curriculum-btn" href="jsandts.html">JavaScript & TypeScript Curriculum</a>
+          <a class="curriculum-btn" href="spoken-english.html">Spoken English Curriculum</a>
+        </div>
+      </section>
       <footer>
-        <div>© <span id="year"></span> Stockholm IT Academy. All rights reserved.</div>
+        <div>© <span id="year"></span> Stockholm IT Academy.</div>
         <div class="footer-links">
-          <a href="mailto:ask@sita.dev">ask@sita.dev</a>
-          <a href="https://www.sita.dev" target="_blank" rel="noopener noreferrer">Visit main website</a>
+          <a href="https://www.sita.dev" target="_blank" rel="noopener noreferrer">All rights reserved.</a>
         </div>
       </footer>
     </div>
