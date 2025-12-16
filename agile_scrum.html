@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Agile Scrum Curriculum – Stockholm IT Academy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+
+  <style>
+    :root {
+      --falun-red: #801818;
+      --swedish-yellow: #fada5e;
+      --white: #ffffff;
+      --bg-main: #020204;
+      --bg-shell: #050509;
+      --bg-card: #0c0c12;
+      --bg-card-soft: #12121c;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --text-soft: #6b7280;
+      --border-subtle: rgba(148,163,184,0.55);
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --shadow-shell: 0 30px 120px rgba(0,0,0,0.9);
+      --shadow-card: 0 20px 70px rgba(0,0,0,0.85);
+      --transition-fast: 140ms ease-out;
+      --transition-med: 220ms ease-out;
+      --max-width: 1160px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(248, 250, 252, 0.08), transparent 55%),
+        radial-gradient(circle at 120% 0, rgba(250, 218, 94, 0.08), transparent 55%),
+        radial-gradient(circle at bottom, rgba(128, 24, 24, 0.55), #020204 68%, #020204 100%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 24px 16px 40px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: var(--max-width);
+    }
+
+    .shell {
+      background:
+        radial-gradient(circle at top left, rgba(128, 24, 24, 0.48), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(16, 24, 40, 0.95), rgba(5, 5, 9, 0.98));
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(75, 85, 99, 0.85);
+      box-shadow: var(--shadow-shell);
+      padding: 24px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(55, 65, 81, 0.85);
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Brand logo container */
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 16px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(250, 218, 94, 0.12),
+      rgba(5, 5, 9, 0.98)
+    );
+
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.85),
+    inset 0 0 0 1px rgba(250, 218, 94, 0.25);
+
+  overflow: hidden;
+}
+
+/* Inner overlay layer (kept behind logo) */
+.brand-mark::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 14px;
+  background: radial-gradient(
+    circle at top,
+    rgba(5, 5, 9, 0.9),
+    rgba(5, 5, 9, 0.98)
+  );
+  border: 1px solid rgba(5, 5, 9, 0.95);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Logo image */
+.brand-mark img {
+  position: relative;
+  z-index: 1;
+
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  display: block;
+
+  background: #000;
+  padding: 2px;
+  border-radius: 10px;
+
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.8),
+    0 0 10px rgba(128, 24, 24, 0.35);
+}
+
+/* Make logo clickable */
+.brand-link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+/* Hover effect */
+.brand-link:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.9),
+    inset 0 0 0 1px rgba(250, 218, 94, 0.45);
+}
+
+/* Hover glow on logo */
+.brand-link:hover img {
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.85),
+    0 0 14px rgba(128, 24, 24, 0.55);
+}
+
+/* Keyboard accessibility */
+.brand-link:focus-visible {
+  outline: 2px solid rgba(250, 218, 94, 0.8);
+  outline-offset: 4px;
+}
+
+
+    .brand-initials {
+      position: relative;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .brand-text-main {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .brand-text-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .header-link {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .header-link span.icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+
+    .header-link:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(249, 250, 251, 0.6);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 640px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-link {
+        align-self: flex-end;
+      }
+    }
+
+    .hero {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
+      padding: 16px 16px 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.75);
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(248, 250, 252, 0.2);
+      background: rgba(15, 23, 42, 0.8);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .hero-eyebrow span.label {
+      color: var(--swedish-yellow);
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .hero-title span.highlight {
+      color: var(--swedish-yellow);
+    }
+
+    .hero-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 640px;
+      line-height: 1.6;
+    }
+
+    .layout {
+      margin-top: 18px;
+      display: grid;
+      gap: 18px;
+    }
+
+    @media (min-width: 920px) {
+      .layout {
+        grid-template-columns: minmax(0, 1.7fr) minmax(290px, 0.9fr);
+        align-items: flex-start;
+      }
+    }
+
+    .curriculum-column {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .curriculum-intro {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .curriculum-note {
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+
+    .module-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    details.module {
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(12, 12, 18, 0.98));
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      padding: 10px 11px;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.7);
+      transition: border-color var(--transition-med), transform var(--transition-med), box-shadow var(--transition-med), background-color var(--transition-med);
+    }
+
+    details.module[open] {
+      border-color: rgba(250, 218, 94, 0.8);
+      transform: translateY(-1px);
+      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.85);
+      background: radial-gradient(circle at top left, rgba(128, 24, 24, 0.5), rgba(12, 12, 18, 0.98));
+    }
+
+    summary.module-summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    summary.module-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .module-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .module-number {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, rgba(250, 218, 94, 0.9), rgba(161, 98, 7, 0.9));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1f2937;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.7);
+    }
+
+    .module-title-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .module-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .module-tagline {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .module-chevron {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    details[open] .module-chevron {
+      transform: rotate(90deg);
+      border-color: rgba(250, 218, 94, 0.8);
+      color: var(--swedish-yellow);
+    }
+
+    .module-body {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(55, 65, 81, 0.8);
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .module-body p {
+      margin-bottom: 6px;
+    }
+
+    .module-list-items {
+      list-style: none;
+      display: grid;
+      gap: 3px;
+      margin-top: 4px;
+    }
+
+    .module-list-items li {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .module-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.9);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .module-bullet-text {
+      color: var(--text-muted);
+    }
+
+    .payment-column {
+      position: relative;
+    }
+
+    .payment-panel {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(250, 218, 94, 0.85);
+      background:
+        radial-gradient(circle at top left, rgba(250, 218, 94, 0.12), transparent 55%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(5, 5, 9, 0.98));
+      padding: 16px 14px 16px;
+      box-shadow: var(--shadow-card);
+    }
+
+    @media (min-width: 920px) {
+      .payment-panel {
+        position: sticky;
+        top: 18px;
+      }
+    }
+
+    .pay-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .pay-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .pay-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .pay-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .pay-chip {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      padding: 4px 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pay-chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--swedish-yellow);
+      box-shadow: 0 0 10px rgba(250, 218, 94, 0.8);
+    }
+
+    .pay-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(75, 85, 99, 0.9), transparent);
+      margin: 10px 0;
+    }
+
+    stripe-buy-button {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    stripe-buy-button iframe {
+      width: 100% !important;
+      margin: 0 auto;
+    }
+
+    .pay-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(31, 41, 55, 0.85);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(156, 163, 175, 0.9);
+      padding-bottom: 1px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="shell">
+
+      <header>
+        <div class="brand">
+          <a href="index.html" class="brand-mark brand-link" aria-label="Go to payment page">
+  <img src="assets/logo.png" alt="Stockholm IT Academy logo" />
+</a>
+          <div>
+            <div class="brand-text-main">Stockholm IT Academy</div>
+            <div class="brand-text-sub">JavaScript and TypeScript course curriculum</div>
+          </div>
+        </div>
+        <a href="/" class="header-link">
+          <span class="icon">←</span>
+          <span>Back to payment page</span>
+        </a>
+      </header>
+
+      <section class="hero" aria-label="Agile Scrum curriculum">
+        <div class="hero-eyebrow">
+          <span class="label">Agile Scrum curriculum</span>
+          <span>Understand sprints, stories and team delivery</span>
+        </div>
+        <h1 class="hero-title">
+          Learn <span class="highlight">Agile Scrum</span> with real examples
+        </h1>
+        <p class="hero-subtitle">
+          A practical curriculum to understand Scrum roles, events and artifacts, and how real teams deliver work in sprints.
+        </p>
+      </section>
+
+      <main class="layout">
+        <section class="curriculum-column" aria-label="JavaScript and TypeScript curriculum">
+          <p class="curriculum-intro">
+            This course keeps Agile and Scrum simple and practical. You learn concepts and also practice how to use them.
+          </p>
+          <p class="curriculum-note">
+            Open a module to explore what you learn and how you practice it.
+          </p>
+
+          <div class="module-list">
+
+            <details class="module" open>
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">1</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Agile mindset and product thinking</div>
+                    <div class="module-tagline">Why teams work in small steps</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn the purpose behind Agile and what teams try to improve. We keep it practical and tied to daily work.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">What problems Agile tries to solve</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Value, feedback loops and small deliveries</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Product thinking in simple terms</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Common misunderstandings and what to avoid</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">2</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Scrum roles and responsibilities</div>
+                    <div class="module-tagline">Who does what in a sprint</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn the Scrum roles and what good teamwork looks like. You also learn how roles work in real companies.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Product Owner, Scrum Master and Developers</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Stakeholders and how to work with them</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">What good ownership looks like in a team</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">How roles are combined in small teams</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">3</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Scrum events</div>
+                    <div class="module-tagline">Plan, sync, review and improve</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn each event and what to prepare. You also learn how to keep meetings short and useful.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Sprint Planning steps and outputs</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Daily Scrum updates that stay clear</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Sprint Review focus and demo flow</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Retrospective formats that lead to action</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">4</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Scrum artifacts</div>
+                    <div class="module-tagline">Backlog to increment</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn the key artifacts and how they help delivery. We use clear examples and templates.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Product Backlog and refinement basics</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Sprint Backlog and task breakdown</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Definition of Done and why it matters</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Increment and release mindset</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">5</div>
+                  <div class="module-title-text">
+                    <div class="module-title">User stories and acceptance criteria</div>
+                    <div class="module-tagline">Turn needs into clear work</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You practice writing user stories and acceptance criteria that make sense for developers and testers.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">User story format and when to use it</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Acceptance criteria with examples</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Splitting stories into smaller pieces</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Common gaps that create rework</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">6</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Estimation and planning</div>
+                    <div class="module-tagline">Make work visible and predictable</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn simple estimation methods and how teams plan without fake precision.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Story points and relative estimation</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Planning poker in a simple flow</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Capacity and sprint planning with reality checks</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Tracking progress with burn down style views</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">7</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Tools and team workflow</div>
+                    <div class="module-tagline">Work with Jira style boards</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn how to use common tools and how to keep boards clean. The focus is on clarity.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Board setup, columns and WIP limits</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Tickets, subtasks and linking work</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Good comments and status updates</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Simple reporting for stakeholders</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">8</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Scrum simulation and interview readiness</div>
+                    <div class="module-tagline">Practice the real thing</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You run a mini sprint simulation with real stories and deliverables. You also practice how to explain Scrum in interviews.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Mini sprint from planning to review</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Handling changes and scope in a healthy way</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Interview questions and strong answers</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Next steps for PSM I style preparation</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+                    </div>
+        </section>
+
+        <aside class="payment-column" aria-label="Agile Scrum payment">
+          <div class="payment-panel">
+            <p class="pay-label">Secure your seat for Agile Scrum</p>
+            <h2 class="pay-title">Agile Scrum</h2>
+            <p class="pay-subtitle">
+              Pay online with Stripe. After payment you receive your receipt and course onboarding details.
+            </p>
+
+            <div class="pay-meta">
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Scrum roles and events</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>User stories and planning</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Tool workflow basics</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Mini sprint simulation</span>
+              </div>
+            </div>
+
+            <div class="pay-divider"></div>
+
+            <stripe-buy-button
+              buy-button-id="buy_btn_1SdyXiAmKJqD2xzJ4ji4V7zp"
+              publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+            </stripe-buy-button>
+
+            <p class="pay-note">
+              You can pay now or later. Your seat is confirmed after successful payment.
+            </p>
+          </div>
+        </aside>
+      </main>
+
+      <footer>
+        <div>© <span id="year"></span> Stockholm IT Academy</div>
+        <div class="footer-links">
+          <a href="index.html">Payment page</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -932,11 +932,227 @@
         rgba(8, 8, 14, 1);
     }
 
+  
+    .top-social {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-bottom: 12px;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.55);
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 12px;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+      white-space: nowrap;
+    }
+
+    .social-link:hover {
+      transform: translateY(-1px);
+      border-color: rgba(250, 218, 94, 0.7);
+      box-shadow: 0 0 18px rgba(250, 218, 94, 0.18);
+      color: var(--white);
+    }
+
+    .social-icon {
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--swedish-yellow);
+      text-shadow: 0 0 12px rgba(250, 218, 94, 0.35);
+    }
+
+    .social-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    @media (max-width: 640px) {
+      .top-social {
+        justify-content: flex-start;
+      }
+      .social-text {
+        display: none;
+      }
+      .social-link {
+        padding: 8px 10px;
+      }
+    }
+
+    .banner {
+      margin: 12px 0;
+      border-radius: 18px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background:
+        radial-gradient(circle at top left, rgba(250, 218, 94, 0.12), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(128, 24, 24, 0.25), transparent 55%),
+        rgba(11, 11, 17, 0.92);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.85);
+      overflow: hidden;
+    }
+
+    .banner-webinar {
+      border-color: rgba(250, 218, 94, 0.45);
+    }
+
+    .banner-batch {
+      border-color: rgba(128, 24, 24, 0.55);
+    }
+
+    .banner-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+    }
+
+    .banner-left {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .banner-badge {
+      flex-shrink: 0;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 700;
+      color: #111;
+      background: rgba(250, 218, 94, 0.95);
+      box-shadow: 0 0 16px rgba(250, 218, 94, 0.28);
+      white-space: nowrap;
+    }
+
+    .banner-copy {
+      min-width: 0;
+      display: grid;
+      gap: 2px;
+    }
+
+    .banner-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.3;
+    }
+
+    .banner-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .banner-cta {
+      flex-shrink: 0;
+      padding: 9px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      color: #111;
+      background: rgba(250, 218, 94, 0.95);
+      box-shadow: 0 0 20px rgba(250, 218, 94, 0.4);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+      white-space: nowrap;
+    }
+
+    .banner-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 26px rgba(250, 218, 94, 0.55);
+    }
+
+    .banner-cta-secondary {
+      background: rgba(250, 218, 94, 0.85);
+    }
+
+    @media (max-width: 720px) {
+      .banner-inner {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .banner-cta {
+        width: 100%;
+        text-align: center;
+      }
+      .banner-left {
+        align-items: center;
+      }
+      .banner-badge {
+        align-self: flex-start;
+      }
+    }
+
+    .course-card-center {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: 100%;
+      max-width: 360px;
+    }
+
   </style>
 </head>
 <body>
   <div class="page">
     <div class="shell">
+      <div class="top-social" aria-label="Follow Stockholm IT Academy">
+        <a class="social-link" href="https://whatsapp.com/channel/0029Vb60fUZADTOB34Atcu3f" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Channel">
+          <span class="social-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 4.5a7.5 7.5 0 0 0-6.36 11.47L5 20l4.17-1.6A7.5 7.5 0 1 0 12 4.5Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9.1 9.2c.2-.5.4-.5.7-.5h.6c.2 0 .4.1.5.4l.6 1.4c.1.3.1.5-.1.7l-.4.5c-.1.2-.1.4 0 .5.6 1 1.5 1.8 2.5 2.4.2.1.4.1.5 0l.5-.4c.2-.2.5-.2.7-.1l1.4.6c.3.1.4.3.4.5v.6c0 .3 0 .5-.5.7-.6.3-1.7.5-3.2-.1-1.6-.6-3.4-2.3-4.2-3.9-.8-1.5-.4-2.6-.1-3.2Z" fill="currentColor"/>
+            </svg>
+          </span>
+          <span class="social-text">WhatsApp</span>
+        </a>
+
+        <a class="social-link" href="https://www.instagram.com/stockholmitacademy/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <span class="social-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M8 4.8h8A3.2 3.2 0 0 1 19.2 8v8A3.2 3.2 0 0 1 16 19.2H8A3.2 3.2 0 0 1 4.8 16V8A3.2 3.2 0 0 1 8 4.8Z" stroke="currentColor" stroke-width="1.6" />
+              <path d="M12 15.4A3.4 3.4 0 1 0 12 8.6a3.4 3.4 0 0 0 0 6.8Z" stroke="currentColor" stroke-width="1.6" />
+              <path d="M16.9 7.3h.01" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+            </svg>
+          </span>
+          <span class="social-text">Instagram</span>
+        </a>
+
+        <a class="social-link" href="https://www.youtube.com/@stockholmitacademy" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+          <span class="social-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M10 9.5 15.5 12 10 14.5V9.5Z" fill="currentColor"/>
+              <path d="M20.6 8.2a2.7 2.7 0 0 0-1.9-1.9C17 6 12 6 12 6s-5 0-6.7.3a2.7 2.7 0 0 0-1.9 1.9C3 9.9 3 12 3 12s0 2.1.4 3.8a2.7 2.7 0 0 0 1.9 1.9C7 18 12 18 12 18s5 0 6.7-.3a2.7 2.7 0 0 0 1.9-1.9c.4-1.7.4-3.8.4-3.8s0-2.1-.4-3.8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="social-text">YouTube</span>
+        </a>
+
+        <a class="social-link" href="https://www.linkedin.com/company/sitadev" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <span class="social-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M6.8 10.2V18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M6.8 6.6h.01" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+              <path d="M10.6 18v-4.2c0-1.9 1.1-3 2.7-3 1.7 0 2.4 1.2 2.4 3V18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M10.6 10.2V18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="social-text">LinkedIn</span>
+        </a>
+      </div>
+
       <header>
         <div class="brand">
 <a href="index.html" class="brand-mark brand-link" aria-label="Go to payment page">
@@ -960,6 +1176,33 @@
           </a>
         </div>
       </header>
+
+
+      <section class="banner banner-webinar" aria-label="Webinar registration">
+        <div class="banner-inner">
+          <div class="banner-left">
+            <span class="banner-badge">Zoom webinar</span>
+            <div class="banner-copy">
+              <div class="banner-title">Join our live webinar for a clear course walkthrough</div>
+              <div class="banner-subtitle">Curriculum walkthrough, live interactive Q and A, and career counselling</div>
+            </div>
+          </div>
+          <a class="banner-cta" href="https://us06web.zoom.us/webinar/register/5917657850911/WN_YUPH34pVRAu2haV4_G-sLA" target="_blank" rel="noopener noreferrer">Register on Zoom</a>
+        </div>
+      </section>
+
+      <section class="banner banner-batch" aria-label="Next batch announcement">
+        <div class="banner-inner">
+          <div class="banner-left">
+            <span class="banner-badge">Admissions open</span>
+            <div class="banner-copy">
+              <div class="banner-title">Next batch starts 12 January 2026</div>
+              <div class="banner-subtitle">Admissions close once the batch is full</div>
+            </div>
+          </div>
+          <a class="banner-cta banner-cta-secondary" href="#courses">Reserve your seat</a>
+        </div>
+      </section>
 
       <main>
         <section class="hero" aria-label="Introduction">
@@ -1065,8 +1308,7 @@
                 </p>
               </div>
             </article>
-
-            <article class="course-card">
+<article class="course-card">
               <div class="course-header-line">
                 <h2 class="course-name">Automation Testing</h2>
                 <span class="course-badge">For testers with coding interest</span>
@@ -1088,8 +1330,7 @@
                 </p>
               </div>
             </article>
-
-            <article class="course-card">
+<article class="course-card">
               <div class="course-header-line">
                 <h2 class="course-name">Manual and Automation Testing</h2>
                 <span class="course-badge">Full testing path</span>
@@ -1111,31 +1352,7 @@
                 </p>
               </div>
             </article>
-
-            <article class="course-card">
-              <div class="course-header-line">
-                <h2 class="course-name">Python</h2>
-                <span class="course-badge">Coding from scratch</span>
-              </div>
-              <p class="course-subtitle">
-                Learn Python with step by step practice and use it for automation, data tasks and general scripting.
-              </p>
-              <div class="course-meta-row">
-                <span class="course-chip">Live coding sessions</span>
-                <span class="course-chip">Small focused projects</span>
-              </div>
-              <div class="course-footer">
-                <stripe-buy-button
-                  buy-button-id="buy_btn_1Sd6agAmKJqD2xzJteUZxqT9"
-                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
-                </stripe-buy-button>
-                <p class="course-helper-text">
-                  Select this if you want a simple and clear start in programming.
-                </p>
-              </div>
-            </article>
-
-            <article class="course-card">
+<article class="course-card">
               <div class="course-header-line">
                 <h2 class="course-name">JavaScript and TypeScript</h2>
                 <span class="course-badge">Core of web development</span>
@@ -1157,8 +1374,95 @@
                 </p>
               </div>
             </article>
-
-            <article class="course-card">
+<article class="course-card">
+              <div class="course-header-line">
+                <h2 class="course-name">Frontend Development with React and Next.js</h2>
+                <span class="course-badge">199 EUR</span>
+              </div>
+              <p class="course-subtitle">
+                Build modern user interfaces with React and ship production ready pages with Next.js using a clear step by step path.
+              </p>
+              <div class="course-meta-row">
+                <span class="course-chip">React components and hooks</span>
+                <span class="course-chip">Next.js routing and data</span>
+              </div>
+              <div class="course-footer">
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1SdyZtAmKJqD2xzJVwhUo5Kr"
+                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+                </stripe-buy-button>
+                <p class="course-helper-text">
+                  Choose this if you want a strong frontend path with modern tools.
+                </p>
+              </div>
+            </article>
+<article class="course-card">
+              <div class="course-header-line">
+                <h2 class="course-name">Fullstack Development with MERN Stack</h2>
+                <span class="course-badge">299 EUR</span>
+              </div>
+              <p class="course-subtitle">
+                Learn backend, api, database and frontend together by building a complete application with the MERN stack.
+              </p>
+              <div class="course-meta-row">
+                <span class="course-chip">Node, Express and MongoDB</span>
+                <span class="course-chip">React app with real api</span>
+              </div>
+              <div class="course-footer">
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1SdyYkAmKJqD2xzJEotsuh4F"
+                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+                </stripe-buy-button>
+                <p class="course-helper-text">
+                  Good choice if you want fullstack skills and a full project portfolio.
+                </p>
+              </div>
+            </article>
+<article class="course-card">
+              <div class="course-header-line">
+                <h2 class="course-name">Python</h2>
+                <span class="course-badge">Coding from scratch</span>
+              </div>
+              <p class="course-subtitle">
+                Learn Python with step by step practice and use it for automation, data tasks and general scripting.
+              </p>
+              <div class="course-meta-row">
+                <span class="course-chip">Live coding sessions</span>
+                <span class="course-chip">Small focused projects</span>
+              </div>
+              <div class="course-footer">
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1Sd6agAmKJqD2xzJteUZxqT9"
+                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+                </stripe-buy-button>
+                <p class="course-helper-text">
+                  Select this if you want a simple and clear start in programming.
+                </p>
+              </div>
+            </article>
+<article class="course-card">
+              <div class="course-header-line">
+                <h2 class="course-name">Agile Scrum</h2>
+                <span class="course-badge">Team workflow</span>
+              </div>
+              <p class="course-subtitle">
+                Learn Agile and Scrum in a practical way so you can work with sprints, stories and teamwork in real projects.
+              </p>
+              <div class="course-meta-row">
+                <span class="course-chip">Roles, events and artifacts</span>
+                <span class="course-chip">Stories and estimation</span>
+              </div>
+              <div class="course-footer">
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1SdyXiAmKJqD2xzJ4ji4V7zp"
+                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+                </stripe-buy-button>
+                <p class="course-helper-text">
+                  Pick this if you want to understand how modern delivery teams work.
+                </p>
+              </div>
+            </article>
+<article class="course-card">
               <div class="course-header-line">
                 <h2 class="course-name">Spoken English</h2>
                 <span class="course-badge">Speak with confidence</span>
@@ -1180,7 +1484,29 @@
                 </p>
               </div>
             </article>
-          </div>
+<article class="course-card course-card-center">
+              <div class="course-header-line">
+                <h2 class="course-name">Professional Development Mentoring</h2>
+                <span class="course-badge">299 EUR</span>
+              </div>
+              <p class="course-subtitle">
+                Job search mentoring plus workplace skills. Improve resume, LinkedIn and interviews, then build confidence for real work.
+              </p>
+              <div class="course-meta-row">
+                <span class="course-chip">Resume, LinkedIn, interviews</span>
+                <span class="course-chip">Workplace communication</span>
+              </div>
+              <div class="course-footer">
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1SdyQuAmKJqD2xzJIUSRwflu"
+                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+                </stripe-buy-button>
+                <p class="course-helper-text">
+                  Choose this if you want guided support for job search and day to day work.
+                </p>
+              </div>
+            </article>
+</div>
         </section>
       </main>
 
@@ -1273,11 +1599,17 @@
         <h2 class="curriculum-title">View full curriculum for each course</h2>
 
         <div class="curriculum-grid">
-          <a class="curriculum-btn" href="manual-testing.html">Manual Testing Curriculum</a>
-          <a class="curriculum-btn" href="automation-testing.html">Automation Testing Curriculum</a>
-          <a class="curriculum-btn" href="python.html">Python Curriculum</a>
-          <a class="curriculum-btn" href="jsandts.html">JavaScript & TypeScript Curriculum</a>
-          <a class="curriculum-btn" href="spoken-english.html">Spoken English Curriculum</a>
+          <a class="curriculum-btn" href="manual-testing.html" target="_blank" rel="noopener noreferrer">Manual Testing Curriculum</a>
+          <a class="curriculum-btn" href="automation-testing.html" target="_blank" rel="noopener noreferrer">Automation Testing Curriculum</a>
+          <a class="curriculum-btn" href="python.html" target="_blank" rel="noopener noreferrer">Python Curriculum</a>
+          <a class="curriculum-btn" href="jsandts.html" target="_blank" rel="noopener noreferrer">JavaScript & TypeScript Curriculum</a>
+          <a class="curriculum-btn" href="spoken-english.html" target="_blank" rel="noopener noreferrer">Spoken English Curriculum</a>
+
+          <a class="curriculum-btn" href="frontend_react_next.html" target="_blank" rel="noopener noreferrer">React and Next.js Curriculum</a>
+          <a class="curriculum-btn" href="fullstack_mern.html" target="_blank" rel="noopener noreferrer">MERN Stack Curriculum</a>
+          <a class="curriculum-btn" href="agile_scrum.html" target="_blank" rel="noopener noreferrer">Agile Scrum Curriculum</a>
+          <a class="curriculum-btn" href="professional_development_mentoring.html" target="_blank" rel="noopener noreferrer">Professional Development Mentoring Curriculum</a>
+
         </div>
       </section>
       <footer>

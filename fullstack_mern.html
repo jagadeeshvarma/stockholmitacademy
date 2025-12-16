@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MERN Stack Curriculum – Stockholm IT Academy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+
+  <style>
+    :root {
+      --falun-red: #801818;
+      --swedish-yellow: #fada5e;
+      --white: #ffffff;
+      --bg-main: #020204;
+      --bg-shell: #050509;
+      --bg-card: #0c0c12;
+      --bg-card-soft: #12121c;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --text-soft: #6b7280;
+      --border-subtle: rgba(148,163,184,0.55);
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --shadow-shell: 0 30px 120px rgba(0,0,0,0.9);
+      --shadow-card: 0 20px 70px rgba(0,0,0,0.85);
+      --transition-fast: 140ms ease-out;
+      --transition-med: 220ms ease-out;
+      --max-width: 1160px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(248, 250, 252, 0.08), transparent 55%),
+        radial-gradient(circle at 120% 0, rgba(250, 218, 94, 0.08), transparent 55%),
+        radial-gradient(circle at bottom, rgba(128, 24, 24, 0.55), #020204 68%, #020204 100%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 24px 16px 40px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: var(--max-width);
+    }
+
+    .shell {
+      background:
+        radial-gradient(circle at top left, rgba(128, 24, 24, 0.48), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(16, 24, 40, 0.95), rgba(5, 5, 9, 0.98));
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(75, 85, 99, 0.85);
+      box-shadow: var(--shadow-shell);
+      padding: 24px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(55, 65, 81, 0.85);
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Brand logo container */
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 16px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(250, 218, 94, 0.12),
+      rgba(5, 5, 9, 0.98)
+    );
+
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.85),
+    inset 0 0 0 1px rgba(250, 218, 94, 0.25);
+
+  overflow: hidden;
+}
+
+/* Inner overlay layer (kept behind logo) */
+.brand-mark::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 14px;
+  background: radial-gradient(
+    circle at top,
+    rgba(5, 5, 9, 0.9),
+    rgba(5, 5, 9, 0.98)
+  );
+  border: 1px solid rgba(5, 5, 9, 0.95);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Logo image */
+.brand-mark img {
+  position: relative;
+  z-index: 1;
+
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  display: block;
+
+  background: #000;
+  padding: 2px;
+  border-radius: 10px;
+
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.8),
+    0 0 10px rgba(128, 24, 24, 0.35);
+}
+
+/* Make logo clickable */
+.brand-link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+/* Hover effect */
+.brand-link:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.9),
+    inset 0 0 0 1px rgba(250, 218, 94, 0.45);
+}
+
+/* Hover glow on logo */
+.brand-link:hover img {
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.85),
+    0 0 14px rgba(128, 24, 24, 0.55);
+}
+
+/* Keyboard accessibility */
+.brand-link:focus-visible {
+  outline: 2px solid rgba(250, 218, 94, 0.8);
+  outline-offset: 4px;
+}
+
+
+    .brand-initials {
+      position: relative;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .brand-text-main {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .brand-text-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .header-link {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .header-link span.icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+
+    .header-link:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(249, 250, 251, 0.6);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 640px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-link {
+        align-self: flex-end;
+      }
+    }
+
+    .hero {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
+      padding: 16px 16px 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.75);
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(248, 250, 252, 0.2);
+      background: rgba(15, 23, 42, 0.8);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .hero-eyebrow span.label {
+      color: var(--swedish-yellow);
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .hero-title span.highlight {
+      color: var(--swedish-yellow);
+    }
+
+    .hero-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 640px;
+      line-height: 1.6;
+    }
+
+    .layout {
+      margin-top: 18px;
+      display: grid;
+      gap: 18px;
+    }
+
+    @media (min-width: 920px) {
+      .layout {
+        grid-template-columns: minmax(0, 1.7fr) minmax(290px, 0.9fr);
+        align-items: flex-start;
+      }
+    }
+
+    .curriculum-column {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .curriculum-intro {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .curriculum-note {
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+
+    .module-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    details.module {
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(12, 12, 18, 0.98));
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      padding: 10px 11px;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.7);
+      transition: border-color var(--transition-med), transform var(--transition-med), box-shadow var(--transition-med), background-color var(--transition-med);
+    }
+
+    details.module[open] {
+      border-color: rgba(250, 218, 94, 0.8);
+      transform: translateY(-1px);
+      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.85);
+      background: radial-gradient(circle at top left, rgba(128, 24, 24, 0.5), rgba(12, 12, 18, 0.98));
+    }
+
+    summary.module-summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    summary.module-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .module-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .module-number {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, rgba(250, 218, 94, 0.9), rgba(161, 98, 7, 0.9));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1f2937;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.7);
+    }
+
+    .module-title-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .module-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .module-tagline {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .module-chevron {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    details[open] .module-chevron {
+      transform: rotate(90deg);
+      border-color: rgba(250, 218, 94, 0.8);
+      color: var(--swedish-yellow);
+    }
+
+    .module-body {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(55, 65, 81, 0.8);
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .module-body p {
+      margin-bottom: 6px;
+    }
+
+    .module-list-items {
+      list-style: none;
+      display: grid;
+      gap: 3px;
+      margin-top: 4px;
+    }
+
+    .module-list-items li {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .module-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.9);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .module-bullet-text {
+      color: var(--text-muted);
+    }
+
+    .payment-column {
+      position: relative;
+    }
+
+    .payment-panel {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(250, 218, 94, 0.85);
+      background:
+        radial-gradient(circle at top left, rgba(250, 218, 94, 0.12), transparent 55%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(5, 5, 9, 0.98));
+      padding: 16px 14px 16px;
+      box-shadow: var(--shadow-card);
+    }
+
+    @media (min-width: 920px) {
+      .payment-panel {
+        position: sticky;
+        top: 18px;
+      }
+    }
+
+    .pay-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .pay-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .pay-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .pay-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .pay-chip {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      padding: 4px 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pay-chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--swedish-yellow);
+      box-shadow: 0 0 10px rgba(250, 218, 94, 0.8);
+    }
+
+    .pay-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(75, 85, 99, 0.9), transparent);
+      margin: 10px 0;
+    }
+
+    stripe-buy-button {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    stripe-buy-button iframe {
+      width: 100% !important;
+      margin: 0 auto;
+    }
+
+    .pay-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(31, 41, 55, 0.85);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(156, 163, 175, 0.9);
+      padding-bottom: 1px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="shell">
+
+      <header>
+        <div class="brand">
+          <a href="index.html" class="brand-mark brand-link" aria-label="Go to payment page">
+  <img src="assets/logo.png" alt="Stockholm IT Academy logo" />
+</a>
+          <div>
+            <div class="brand-text-main">Stockholm IT Academy</div>
+            <div class="brand-text-sub">JavaScript and TypeScript course curriculum</div>
+          </div>
+        </div>
+        <a href="/" class="header-link">
+          <span class="icon">←</span>
+          <span>Back to payment page</span>
+        </a>
+      </header>
+
+      <section class="hero" aria-label="MERN Stack curriculum">
+        <div class="hero-eyebrow">
+          <span class="label">MERN Stack curriculum</span>
+          <span>From api basics to a full app in production</span>
+        </div>
+        <h1 class="hero-title">
+          Become a <span class="highlight">fullstack</span> developer with MERN
+        </h1>
+        <p class="hero-subtitle">
+          A practical path where you build a backend, connect a database, and ship a full React app with real features.
+        </p>
+      </section>
+
+      <main class="layout">
+        <section class="curriculum-column" aria-label="JavaScript and TypeScript curriculum">
+          <p class="curriculum-intro">
+            You build a complete application step by step. Each module adds a real part of the final product.
+          </p>
+          <p class="curriculum-note">
+            Open a module to see tasks, topics and outcomes.
+          </p>
+
+          <div class="module-list">
+
+            <details class="module" open>
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">1</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Fullstack overview and setup</div>
+                    <div class="module-tagline">Know the stack and the plan</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  We start by understanding what you will build and how the frontend and backend connect. You set up a clean project structure for fullstack work.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">How a request moves from browser to server to database</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Project structure for client and server folders</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Git workflow for fullstack projects</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Environment variables and safe config handling</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">2</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Node.js and Express basics</div>
+                    <div class="module-tagline">Create your first api</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn how to build an api with Express and how to keep routes clean. We focus on patterns used in real teams.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Routes, controllers and middleware in a clean structure</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Request validation and useful error messages</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Async patterns and handling failures</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Simple logging for debugging</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">3</div>
+                  <div class="module-title-text">
+                    <div class="module-title">MongoDB and Mongoose</div>
+                    <div class="module-tagline">Store and query real data</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn MongoDB basics and how to model data with Mongoose. We keep it practical with real app examples.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Schemas, models and relationships in MongoDB style</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">CRUD operations with safe queries</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Indexes basics and why they matter</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Data validation rules that prevent bad data</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">4</div>
+                  <div class="module-title-text">
+                    <div class="module-title">REST api design</div>
+                    <div class="module-tagline">Build endpoints you can trust</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You design endpoints that are easy to use and easy to maintain. You also learn pagination and filters for real lists.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">REST patterns for resources and nested resources</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Pagination and sorting for large lists</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Filtering and search basics</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Api response shape that helps the frontend</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">5</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Authentication and authorization</div>
+                    <div class="module-tagline">Secure user flows</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You implement signup, login and protected routes. You also learn role based access for admin style pages.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Password hashing and basic security rules</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">JWT flow and protecting routes</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Role checks for admin actions</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Safe error messages and rate limiting basics</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">6</div>
+                  <div class="module-title-text">
+                    <div class="module-title">React frontend for a fullstack app</div>
+                    <div class="module-tagline">Build the UI that talks to your api</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You build the frontend with React, connect it to your api and handle common states in a clean way.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">App layout, routing and reusable components</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Fetch patterns with loading and error states</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Forms with validation and server errors</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">State structure that stays simple as the app grows</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">7</div>
+                  <div class="module-title-text">
+                    <div class="module-title">File upload, images and real features</div>
+                    <div class="module-tagline">Add what users expect</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You add practical features that make the app feel real. We keep the scope reasonable but useful.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Image upload basics and storage options</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Profile pages and editable settings</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Search and filter UI for lists</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Simple notifications and toasts for actions</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">8</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Testing and quality basics</div>
+                    <div class="module-tagline">Reduce bugs and ship with confidence</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You learn how to test key parts without getting stuck in heavy setup. We focus on value.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Api tests for main endpoints</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Frontend component checks for key screens</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Debugging approach when tests fail</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Basic code review checklist</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+            <details class="module">
+              <summary class="module-summary">
+                <div class="module-header-left">
+                  <div class="module-number">9</div>
+                  <div class="module-title-text">
+                    <div class="module-title">Deployment and final project</div>
+                    <div class="module-tagline">Go live and present it well</div>
+                  </div>
+                </div>
+                <div class="module-chevron">›</div>
+              </summary>
+              <div class="module-body">
+                <p>
+                  You deploy both frontend and backend and prepare a portfolio story that recruiters understand.
+                </p>
+                <ul class="module-list-items">
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Deploy api and database with safe config</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Deploy frontend and connect to live api</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Production checks and simple monitoring</span>
+                  </li>
+                  <li>
+                    <span class="module-bullet"></span>
+                    <span class="module-bullet-text">Portfolio write up and interview ready explanation</span>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+
+                    </div>
+        </section>
+
+        <aside class="payment-column" aria-label="MERN Stack payment">
+          <div class="payment-panel">
+            <p class="pay-label">Secure your seat for MERN Stack</p>
+            <h2 class="pay-title">Fullstack Development with MERN Stack</h2>
+            <p class="pay-subtitle">
+              Pay online with Stripe. After payment you receive your receipt and course onboarding details.
+            </p>
+
+            <div class="pay-meta">
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Backend and frontend</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Real api practice</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Auth and database</span>
+              </div>
+              <div class="pay-chip">
+                <span class="pay-chip-dot"></span>
+                <span>Deployment included</span>
+              </div>
+            </div>
+
+            <div class="pay-divider"></div>
+
+            <stripe-buy-button
+              buy-button-id="buy_btn_1SdyYkAmKJqD2xzJEotsuh4F"
+              publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
+            </stripe-buy-button>
+
+            <p class="pay-note">
+              You can pay now or later. Your seat is confirmed after successful payment.
+            </p>
+          </div>
+        </aside>
+      </main>
+
+      <footer>
+        <div>© <span id="year"></span> Stockholm IT Academy</div>
+        <div class="footer-links">
+          <a href="index.html">Payment page</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
