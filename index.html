@@ -4,9 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Stockholm IT Academy</title>
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://stockholmitacademy.com/" />
+
   <meta name="description" content="Secure your seat at Stockholm IT Academy. Pay online for tech and language courses with Stripe." />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Stockholm IT Academy" />
+  <meta property="og:description" content="Secure your seat at Stockholm IT Academy. Pay online for tech and language courses with Stripe." />
+  <meta property="og:url" content="https://stockholmitacademy.com/" />
+  <meta property="og:image" content="https://stockholmitacademy.com/assets/logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Stockholm IT Academy" />
+  <meta name="twitter:description" content="Secure your seat at Stockholm IT Academy. Pay online for tech and language courses with Stripe." />
+  <meta name="twitter:image" content="https://stockholmitacademy.com/assets/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
@@ -249,12 +262,19 @@
     }
 
     .pill-dot {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: radial-gradient(circle at center, var(--swedish-yellow), #b68626);
-      box-shadow: 0 0 0 6px rgba(250, 218, 94, 0.35);
+      box-shadow: 0 0 0 3px rgba(250, 218, 94, 0.28);
+      animation: seatPulse 1.8s ease-in-out infinite;
     }
+
+    @keyframes seatPulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(250, 218, 94, 0.25); opacity: 0.95; }
+      50% { box-shadow: 0 0 0 7px rgba(250, 218, 94, 0.14); opacity: 1; }
+    }
+
 
     .primary-scroll-btn {
       display: inline-flex;
@@ -990,6 +1010,151 @@
       }
     }
 
+
+    /* Countdown */
+    .countdown-wrap {
+      margin: 14px 0 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(250, 218, 94, 0.35);
+      background:
+        radial-gradient(circle at top left, rgba(250, 218, 94, 0.10), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(128, 24, 24, 0.22), transparent 55%),
+        rgba(11, 11, 17, 0.92);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.85);
+      overflow: hidden;
+    }
+
+    .countdown-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px 14px;
+      flex-wrap: wrap;
+    }
+
+    .countdown-left {
+      min-width: 240px;
+      display: grid;
+      gap: 4px;
+    }
+
+    .countdown-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--stockholm-white);
+      line-height: 1.3;
+    }
+
+    .countdown-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      max-width: 560px;
+    }
+
+    .countdown-subtitle strong {
+      color: var(--stockholm-white);
+      font-weight: 600;
+    }
+
+    .countdown-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      margin-left: auto;
+    }
+
+    .timer {
+      display: inline-flex;
+      align-items: stretch;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(5, 5, 10, 0.92);
+      box-shadow: 0 0 18px rgba(250, 218, 94, 0.10);
+    }
+
+    .time-box {
+      min-width: 62px;
+      padding: 8px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(250, 218, 94, 0.25);
+      background: radial-gradient(circle at top, rgba(250, 218, 94, 0.12), rgba(12, 12, 18, 0.96));
+      text-align: center;
+    }
+
+    .time-num {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--swedish-yellow);
+      text-shadow: 0 0 14px rgba(250, 218, 94, 0.18);
+      line-height: 1;
+    }
+
+    .time-label {
+      margin-top: 6px;
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1;
+    }
+
+    .batch-times {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 8px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(128, 24, 24, 0.45);
+      background: rgba(28, 11, 11, 0.88);
+      font-size: 11px;
+      color: rgba(245, 247, 250, 0.92);
+      white-space: nowrap;
+    }
+
+    .batch-times .tiny-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(250, 218, 94, 0.9);
+      box-shadow: 0 0 0 4px rgba(250, 218, 94, 0.16);
+      animation: tinyPulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes tinyPulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(250, 218, 94, 0.14); opacity: 0.95; }
+      50% { box-shadow: 0 0 0 8px rgba(250, 218, 94, 0.08); opacity: 1; }
+    }
+
+    @media (max-width: 720px) {
+      .countdown-inner {
+        align-items: stretch;
+      }
+      .countdown-right {
+        justify-content: flex-start;
+        margin-left: 0;
+      }
+      .timer {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .time-box {
+        flex: 1;
+        min-width: 0;
+      }
+      .batch-times {
+        width: 100%;
+        justify-content: center;
+        white-space: normal;
+        text-align: center;
+      }
+    }
+
     .banner {
       margin: 12px 0;
       border-radius: 18px;
@@ -1178,13 +1343,54 @@
       </header>
 
 
+
+      <section class="countdown-wrap" aria-label="Countdown to next batch">
+        <div class="countdown-inner">
+          <div class="countdown-left">
+            <div class="countdown-title">Next batch starts on 12 January 2026</div>
+            <div class="countdown-subtitle">
+              See how many days are left to join this batch. Admissions close once seats are filled.
+            </div>
+          </div>
+
+          <div class="countdown-right">
+            <div class="timer" role="timer" aria-live="polite">
+              <div class="time-box">
+                <div class="time-num" id="cd-days">0</div>
+                <div class="time-label">Days</div>
+              </div>
+              <div class="time-box">
+                <div class="time-num" id="cd-hours">0</div>
+                <div class="time-label">Hours</div>
+              </div>
+              <div class="time-box">
+                <div class="time-num" id="cd-mins">0</div>
+                <div class="time-label">Mins</div>
+              </div>
+              <div class="time-box">
+                <div class="time-num" id="cd-secs">0</div>
+                <div class="time-label">Secs</div>
+              </div>
+            </div>
+
+            <div class="batch-times" aria-label="Batch timings">
+              <span class="tiny-dot" aria-hidden="true"></span>
+              <span><strong>Morning:</strong> 9:30 am IST</span>
+              <span>|</span>
+              <span><strong>Evening:</strong> 5:00 pm IST</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       <section class="banner banner-webinar" aria-label="Webinar registration">
         <div class="banner-inner">
           <div class="banner-left">
             <span class="banner-badge">Zoom webinar</span>
             <div class="banner-copy">
-              <div class="banner-title">Join our live webinar for a clear course walkthrough</div>
-              <div class="banner-subtitle">Curriculum walkthrough, live interactive Q and A, and career counselling</div>
+              <div class="banner-title">Join our live Zoom webinar before you choose a course</div>
+              <div class="banner-subtitle">Curriculum walkthrough, live interactive Q and A, and practical career counselling</div>
             </div>
           </div>
           <a class="banner-cta" href="https://us06web.zoom.us/webinar/register/5917657850911/WN_YUPH34pVRAu2haV4_G-sLA" target="_blank" rel="noopener noreferrer">Register on Zoom</a>
@@ -1197,7 +1403,7 @@
             <span class="banner-badge">Admissions open</span>
             <div class="banner-copy">
               <div class="banner-title">Next batch starts 12 January 2026</div>
-              <div class="banner-subtitle">Admissions close once the batch is full</div>
+              <div class="banner-subtitle">Admissions close once seats are filled for this batch</div>
             </div>
           </div>
           <a class="banner-cta banner-cta-secondary" href="#courses">Reserve your seat</a>
@@ -1635,6 +1841,38 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    (function () {
+      var target = new Date("2026-01-12T04:00:00Z").getTime(); // 12 Jan 2026 9:30 am IST
+      var daysEl = document.getElementById("cd-days");
+      var hoursEl = document.getElementById("cd-hours");
+      var minsEl = document.getElementById("cd-mins");
+      var secsEl = document.getElementById("cd-secs");
+
+      if (!daysEl || !hoursEl || !minsEl || !secsEl) return;
+
+      function pad(n) {
+        return String(n).padStart(2, "0");
+      }
+
+      function tick() {
+        var now = Date.now();
+        var diff = Math.max(0, target - now);
+
+        var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        var mins = Math.floor((diff / (1000 * 60)) % 60);
+        var secs = Math.floor((diff / 1000) % 60);
+
+        daysEl.textContent = String(days);
+        hoursEl.textContent = pad(hours);
+        minsEl.textContent = pad(mins);
+        secsEl.textContent = pad(secs);
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    })();
   </script>
 </body>
 </html>
