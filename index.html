@@ -1175,6 +1175,10 @@
       border-color: rgba(128, 24, 24, 0.55);
     }
 
+    .banner-monthly {
+      border-color: rgba(250, 218, 94, 0.6);
+    }
+
     .banner-inner {
       display: flex;
       align-items: center;
@@ -1263,6 +1267,12 @@
     .banner-youtube .banner-badge {
       background: rgba(250, 218, 94, 0.92);
     }
+
+    .banner-monthly .banner-badge {
+      background: rgba(128, 24, 24, 0.9);
+      color: var(--white);
+      box-shadow: 0 0 18px rgba(128, 24, 24, 0.45);
+    }
 @media (max-width: 720px) {
       .banner-inner {
         flex-direction: column;
@@ -1341,11 +1351,11 @@
     }
 
     .banner-kicker .kicker-dot {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       border-radius: 999px;
       background: rgba(250, 218, 94, 0.9);
-      box-shadow: 0 0 0 4px rgba(250, 218, 94, 0.16);
+      box-shadow: 0 0 0 3px rgba(250, 218, 94, 0.14);
       animation: tinyPulse 1.8s ease-in-out infinite;
     }
 
@@ -1361,6 +1371,131 @@
         justify-content: center;
         white-space: normal;
         text-align: center;
+      }
+    }
+
+
+
+    .testimonials-section {
+      margin-top: 18px;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at top left, rgba(250, 218, 94, 0.10), transparent 60%),
+        rgba(5, 5, 10, 0.98);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      padding: 16px 14px 18px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+    }
+
+    .testimonials-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .testimonials-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .testimonials-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 680px;
+      line-height: 1.55;
+    }
+
+    .playlist-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(250, 218, 94, 0.7);
+      background:
+        radial-gradient(circle at top, rgba(250, 218, 94, 0.16), transparent 60%),
+        rgba(12, 12, 18, 0.96);
+      color: var(--swedish-yellow);
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 0 18px rgba(250, 218, 94, 0.18);
+      transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med);
+      white-space: nowrap;
+    }
+
+    .playlist-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--swedish-yellow);
+      box-shadow: 0 0 22px rgba(250, 218, 94, 0.42);
+    }
+
+    .video-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-items: stretch;
+    }
+
+    .video-card {
+      border-radius: 18px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      background: linear-gradient(150deg, var(--bg-card), var(--bg-card-soft));
+      overflow: hidden;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.75);
+      transition: transform var(--transition-med), border-color var(--transition-med), box-shadow var(--transition-med);
+    }
+
+    .video-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(250, 218, 94, 0.9);
+      box-shadow: 0 22px 65px rgba(0, 0, 0, 0.85);
+    }
+
+    .video-frame {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      background: #000;
+      position: relative;
+    }
+
+    .video-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    @media (max-width: 1100px) {
+      .video-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .video-grid {
+        grid-template-columns: 78vw 78vw 78vw 78vw;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 6px;
+      }
+
+      .video-card {
+        scroll-snap-align: start;
+      }
+
+      .video-grid::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      .video-grid::-webkit-scrollbar-thumb {
+        background: rgba(250, 218, 94, 0.25);
+        border-radius: 999px;
       }
     }
 
@@ -1435,9 +1570,31 @@
             <span>Go to payment section</span>
             <span class="icon">↓</span>
           </a>
+          <a href="#testimonials" class="hero-secondary">
+            <span class="icon">▶</span>
+            <span>Testimonials</span>
+          </a>
         </div>
       </header>
 
+      
+
+      <section class="banner banner-mega banner-monthly" aria-label="Monthly batches">
+        <div class="banner-inner">
+          <div class="banner-left">
+            <span class="banner-badge">Monthly batches</span>
+            <div class="banner-copy">
+              <div class="banner-title">New Testing batch starts every month in the first week</div>
+              <div class="banner-subtitle">To join the next batch, make your payment before the <strong>30th</strong> so we can add you in time.</div>
+              <div class="banner-kicker" aria-label="Batch note">
+                <span class="kicker-pill"><span class="kicker-dot" aria-hidden="true"></span>Seats are limited</span>
+                <span class="kicker-pill"><span class="kicker-dot" aria-hidden="true"></span>Early payment helps planning</span>
+              </div>
+            </div>
+          </div>
+          <a class="banner-cta" href="#courses">Reserve next batch</a>
+        </div>
+      </section>
       <section class="banner banner-mega" aria-label="Admissions open">
         <div class="banner-inner">
           <div class="banner-left">
@@ -1461,6 +1618,48 @@
             </div>
           </div>
           <a class="banner-cta" href="https://www.youtube.com/@stockholmitacademy" target="_blank" rel="noopener noreferrer">Open YouTube</a>
+        </div>
+      </section>
+
+      <section id="testimonials" class="testimonials-section" aria-label="Student testimonials">
+        <div class="testimonials-header">
+          <div>
+            <h2 class="testimonials-title">Student stories</h2>
+            <p class="testimonials-subtitle">
+              Short videos from learners who completed our sessions and shared what changed for them.
+              Watch a few, then come back to choose your course.
+            </p>
+          </div>
+          <a class="playlist-btn" href="https://www.youtube.com/playlist?list=PLr_e107KkJ9n0w3IxV2e1yq_LD7KPaQPt" target="_blank" rel="noopener noreferrer">
+            <span>View full playlist</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <div class="video-grid">
+          <div class="video-card">
+            <div class="video-frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/vkVMv0Xk8Gs?rel=0&modestbranding=1&playsinline=1" title="Abhinay | Software Testing Course | Student Story" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="video-frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/ufnCTOHbWtY?rel=0&modestbranding=1&playsinline=1" title="Aswathy | Software Testing Course | Student Story" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="video-frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/lAZRNbI6yis?rel=0&modestbranding=1&playsinline=1" title="Prabhashi | Software Testing Course | Student Story" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="video-frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/lG2Xuzd7ez4?rel=0&modestbranding=1&playsinline=1" title="Pavithra | Software Testing Course | Student Story" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+          </div>
         </div>
       </section>
 
