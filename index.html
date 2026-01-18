@@ -1244,7 +1244,26 @@
       background: rgba(250, 218, 94, 0.85);
     }
 
-    @media (max-width: 720px) {
+    
+
+    .banner-mega .banner-inner {
+      padding: 16px 16px;
+    }
+
+    .banner-mega .banner-title {
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+
+    .banner-mega .banner-subtitle strong {
+      color: var(--stockholm-white);
+      font-weight: 700;
+    }
+
+    .banner-youtube .banner-badge {
+      background: rgba(250, 218, 94, 0.92);
+    }
+@media (max-width: 720px) {
       .banner-inner {
         flex-direction: column;
         align-items: stretch;
@@ -1266,6 +1285,83 @@
       justify-self: center;
       width: 100%;
       max-width: 360px;
+    }
+
+
+    .banner-mega .banner-inner {
+      padding: 16px 16px;
+      gap: 14px;
+    }
+
+    .banner-mega .banner-badge {
+      font-size: 11px;
+      padding: 7px 11px;
+      box-shadow: 0 0 22px rgba(250, 218, 94, 0.32);
+    }
+
+    .banner-mega .banner-title {
+      font-size: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .banner-mega .banner-subtitle {
+      font-size: 13px;
+      max-width: 720px;
+    }
+
+    .banner-mega .banner-cta {
+      padding: 11px 16px;
+      font-size: 13px;
+      box-shadow: 0 0 26px rgba(250, 218, 94, 0.48);
+    }
+
+    .banner-mega .banner-cta:hover {
+      box-shadow: 0 0 30px rgba(250, 218, 94, 0.6);
+    }
+
+    .banner-kicker {
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .banner-kicker .kicker-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      background: rgba(5, 5, 10, 0.92);
+      font-size: 11px;
+      color: rgba(245, 247, 250, 0.92);
+      white-space: nowrap;
+    }
+
+    .banner-kicker .kicker-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(250, 218, 94, 0.9);
+      box-shadow: 0 0 0 4px rgba(250, 218, 94, 0.16);
+      animation: tinyPulse 1.8s ease-in-out infinite;
+    }
+
+    @media (max-width: 720px) {
+      .banner-mega .banner-title {
+        font-size: 15px;
+      }
+      .banner-mega .banner-subtitle {
+        font-size: 12px;
+      }
+      .banner-kicker .kicker-pill {
+        width: 100%;
+        justify-content: center;
+        white-space: normal;
+        text-align: center;
+      }
     }
 
   </style>
@@ -1342,73 +1438,32 @@
         </div>
       </header>
 
-
-
-      <section class="countdown-wrap" aria-label="Countdown to next batch">
-        <div class="countdown-inner">
-          <div class="countdown-left">
-            <div class="countdown-title">Next batch starts on 12 January 2026</div>
-            <div class="countdown-subtitle">
-              See how many days are left to join this batch. Admissions close once seats are filled.
-            </div>
-          </div>
-
-          <div class="countdown-right">
-            <div class="timer" role="timer" aria-live="polite">
-              <div class="time-box">
-                <div class="time-num" id="cd-days">0</div>
-                <div class="time-label">Days</div>
-              </div>
-              <div class="time-box">
-                <div class="time-num" id="cd-hours">0</div>
-                <div class="time-label">Hours</div>
-              </div>
-              <div class="time-box">
-                <div class="time-num" id="cd-mins">0</div>
-                <div class="time-label">Mins</div>
-              </div>
-              <div class="time-box">
-                <div class="time-num" id="cd-secs">0</div>
-                <div class="time-label">Secs</div>
-              </div>
-            </div>
-
-            <div class="batch-times" aria-label="Batch timings">
-              <span class="tiny-dot" aria-hidden="true"></span>
-              <span><strong>Morning:</strong> 9:30 am IST</span>
-              <span>|</span>
-              <span><strong>Evening:</strong> 5:00 pm IST</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      <section class="banner banner-webinar" aria-label="Webinar registration">
-        <div class="banner-inner">
-          <div class="banner-left">
-            <span class="banner-badge">Zoom webinar</span>
-            <div class="banner-copy">
-              <div class="banner-title">Join our live Zoom webinar before you choose a course</div>
-              <div class="banner-subtitle">Curriculum walkthrough, live interactive Q and A, and practical career counselling</div>
-            </div>
-          </div>
-          <a class="banner-cta" href="https://us06web.zoom.us/webinar/register/5917657850911/WN_YUPH34pVRAu2haV4_G-sLA" target="_blank" rel="noopener noreferrer">Register on Zoom</a>
-        </div>
-      </section>
-
-      <section class="banner banner-batch" aria-label="Next batch announcement">
+      <section class="banner banner-mega" aria-label="Admissions open">
         <div class="banner-inner">
           <div class="banner-left">
             <span class="banner-badge">Admissions open</span>
             <div class="banner-copy">
-              <div class="banner-title">Next batch starts 12 January 2026</div>
-              <div class="banner-subtitle">Admissions close once seats are filled for this batch</div>
+              <div class="banner-title">Admissions open for Software Testing</div>
+              <div class="banner-subtitle">Make the payment to join the <strong>5:00 pm IST</strong> batch. Seats close once the batch is filled.</div>
             </div>
           </div>
-          <a class="banner-cta banner-cta-secondary" href="#courses">Reserve your seat</a>
+          <a class="banner-cta" href="#courses">Pay and join 5:00 pm IST</a>
         </div>
       </section>
+
+      <section class="banner banner-mega banner-youtube" aria-label="Watch demo recordings">
+        <div class="banner-inner">
+          <div class="banner-left">
+            <span class="banner-badge">Free demo</span>
+            <div class="banner-copy">
+              <div class="banner-title">Watch the demo recordings on YouTube</div>
+              <div class="banner-subtitle">See how our sessions look, the kind of tasks we do, and the pace of teaching.</div>
+            </div>
+          </div>
+          <a class="banner-cta" href="https://www.youtube.com/@stockholmitacademy" target="_blank" rel="noopener noreferrer">Open YouTube</a>
+        </div>
+      </section>
+
 
       <main>
         <section class="hero" aria-label="Introduction">
@@ -1491,8 +1546,7 @@
             </div>
           </div>
 
-          <div class="course-grid">
-            <article class="course-card">
+          <div class="course-grid"><article class="course-card">
               <div class="course-header-line">
                 <h2 class="course-name">Manual Testing</h2>
                 <span class="course-badge">Best start for testing</span>
@@ -1582,50 +1636,6 @@
             </article>
 <article class="course-card">
               <div class="course-header-line">
-                <h2 class="course-name">Frontend Development with React and Next.js</h2>
-                <span class="course-badge">199 EUR</span>
-              </div>
-              <p class="course-subtitle">
-                Build modern user interfaces with React and ship production ready pages with Next.js using a clear step by step path.
-              </p>
-              <div class="course-meta-row">
-                <span class="course-chip">React components and hooks</span>
-                <span class="course-chip">Next.js routing and data</span>
-              </div>
-              <div class="course-footer">
-                <stripe-buy-button
-                  buy-button-id="buy_btn_1SdyZtAmKJqD2xzJVwhUo5Kr"
-                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
-                </stripe-buy-button>
-                <p class="course-helper-text">
-                  Choose this if you want a strong frontend path with modern tools.
-                </p>
-              </div>
-            </article>
-<article class="course-card">
-              <div class="course-header-line">
-                <h2 class="course-name">Fullstack Development with MERN Stack</h2>
-                <span class="course-badge">299 EUR</span>
-              </div>
-              <p class="course-subtitle">
-                Learn backend, api, database and frontend together by building a complete application with the MERN stack.
-              </p>
-              <div class="course-meta-row">
-                <span class="course-chip">Node, Express and MongoDB</span>
-                <span class="course-chip">React app with real api</span>
-              </div>
-              <div class="course-footer">
-                <stripe-buy-button
-                  buy-button-id="buy_btn_1SdyYkAmKJqD2xzJEotsuh4F"
-                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
-                </stripe-buy-button>
-                <p class="course-helper-text">
-                  Good choice if you want fullstack skills and a full project portfolio.
-                </p>
-              </div>
-            </article>
-<article class="course-card">
-              <div class="course-header-line">
                 <h2 class="course-name">Python</h2>
                 <span class="course-badge">Coding from scratch</span>
               </div>
@@ -1648,50 +1658,6 @@
             </article>
 <article class="course-card">
               <div class="course-header-line">
-                <h2 class="course-name">Agile Scrum</h2>
-                <span class="course-badge">Team workflow</span>
-              </div>
-              <p class="course-subtitle">
-                Learn Agile and Scrum in a practical way so you can work with sprints, stories and teamwork in real projects.
-              </p>
-              <div class="course-meta-row">
-                <span class="course-chip">Roles, events and artifacts</span>
-                <span class="course-chip">Stories and estimation</span>
-              </div>
-              <div class="course-footer">
-                <stripe-buy-button
-                  buy-button-id="buy_btn_1SdyXiAmKJqD2xzJ4ji4V7zp"
-                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
-                </stripe-buy-button>
-                <p class="course-helper-text">
-                  Pick this if you want to understand how modern delivery teams work.
-                </p>
-              </div>
-            </article>
-<article class="course-card">
-              <div class="course-header-line">
-                <h2 class="course-name">Spoken English</h2>
-                <span class="course-badge">Speak with confidence</span>
-              </div>
-              <p class="course-subtitle">
-                Improve your spoken English for interviews, daily work and meetings with guided practice and feedback.
-              </p>
-              <div class="course-meta-row">
-                <span class="course-chip">Role plays for work situations</span>
-                <span class="course-chip">Clear feedback on speaking</span>
-              </div>
-              <div class="course-footer">
-                <stripe-buy-button
-                  buy-button-id="buy_btn_1Sd6XiAmKJqD2xzJdMYRYxKz"
-                  publishable-key="pk_live_51SVrS6AmKJqD2xzJRmFvSlAdrtFO1He5o9jS1Bd7nzPG6TXkgic3qBUP9HLUR7beyKCP0ikL2yGk5z2B3F5WhAGh00Mx5sMclB">
-                </stripe-buy-button>
-                <p class="course-helper-text">
-                  Select this if you want to sound clear, natural and confident in English.
-                </p>
-              </div>
-            </article>
-<article class="course-card course-card-center">
-              <div class="course-header-line">
                 <h2 class="course-name">Professional Development Mentoring</h2>
                 <span class="course-badge">299 EUR</span>
               </div>
@@ -1711,8 +1677,7 @@
                   Choose this if you want guided support for job search and day to day work.
                 </p>
               </div>
-            </article>
-</div>
+            </article></div>
         </section>
       </main>
 
@@ -1809,14 +1774,8 @@
           <a class="curriculum-btn" href="automation-testing.html" target="_blank" rel="noopener noreferrer">Automation Testing Curriculum</a>
           <a class="curriculum-btn" href="python.html" target="_blank" rel="noopener noreferrer">Python Curriculum</a>
           <a class="curriculum-btn" href="jsandts.html" target="_blank" rel="noopener noreferrer">JavaScript & TypeScript Curriculum</a>
-          <a class="curriculum-btn" href="spoken-english.html" target="_blank" rel="noopener noreferrer">Spoken English Curriculum</a>
-
-          <a class="curriculum-btn" href="frontend_react_next.html" target="_blank" rel="noopener noreferrer">React and Next.js Curriculum</a>
-          <a class="curriculum-btn" href="fullstack_mern.html" target="_blank" rel="noopener noreferrer">MERN Stack Curriculum</a>
-          <a class="curriculum-btn" href="agile_scrum.html" target="_blank" rel="noopener noreferrer">Agile Scrum Curriculum</a>
           <a class="curriculum-btn" href="professional_development_mentoring.html" target="_blank" rel="noopener noreferrer">Professional Development Mentoring Curriculum</a>
-
-        </div>
+</div>
       </section>
       <footer>
         <div>© <span id="year"></span> Stockholm IT Academy.</div>
